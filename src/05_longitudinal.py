@@ -167,14 +167,14 @@ for ax, period in zip(axes if len(sorted_periods) > 1 else [axes], sorted_period
     for bar, val in zip(bars, counts.values):
         ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.3,
                 str(val), ha="center", va="bottom", fontsize=9)
-    ax.set_title(f"Periodo {period}", fontsize=11)
-    ax.set_xlabel("Clúster")
+    ax.set_title(f"Period {period}", fontsize=11)
+    ax.set_xlabel("Cluster")
     if ax == axes[0] if len(sorted_periods) > 1 else axes:
-        ax.set_ylabel("N° de IES")
+        ax.set_ylabel("No. of HEIs")
     ax.set_xticks(range(1, K+1))
     ax.set_xticklabels([f"C{i}" for i in range(1, K+1)])
 
-fig.suptitle("Evolución del tamaño de clústeres por periodo", fontsize=12)
+fig.suptitle("Cluster size evolution by academic period", fontsize=12)
 fig.tight_layout()
 fig.savefig(FIG_DIR / "05b_evolucion_clusters.png", bbox_inches="tight")
 plt.close()
@@ -221,7 +221,7 @@ if len(sorted_periods) >= 2:
     ax.set_xlim(0, 10)
     ax.set_ylim(0, 10)
     ax.axis("off")
-    ax.set_title(f"Flujo de IES entre clústeres: {p1} → {p2}", fontsize=12)
+    ax.set_title(f"Flow of HEIs between clusters: {p1} → {p2}", fontsize=12)
 
     left_tot  = {cl: merged[c1].tolist().count(cl) for cl in range(1, K+1)}
     right_tot = {cl: merged[c2].tolist().count(cl) for cl in range(1, K+1)}

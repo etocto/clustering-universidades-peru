@@ -65,11 +65,11 @@ dend = dendrogram(
     leaf_font_size=6.5, color_threshold=Z[-K+1, 2],
     above_threshold_color="#B4B2A9"
 )
-ax.set_title(f"Dendrograma Ward — Clustering jerárquico (k={K})", fontsize=12)
-ax.set_xlabel("Universidad")
-ax.set_ylabel("Distancia euclidiana (espacio PCA)")
+ax.set_title(f"Ward dendrogram — Hierarchical clustering (k={K})", fontsize=12)
+ax.set_xlabel("University")
+ax.set_ylabel("Euclidean distance (PCA space)")
 ax.axhline(Z[-K+1, 2], color="#D85A30", linestyle="--", linewidth=1, alpha=0.7)
-ax.text(2, Z[-K+1, 2] * 1.02, f"corte k={K}", color="#D85A30", fontsize=9)
+ax.text(2, Z[-K+1, 2] * 1.02, f"cut k={K}", color="#D85A30", fontsize=9)
 plt.xticks(rotation=90)
 fig.tight_layout()
 fig.savefig(FIG_DIR / "03a_dendrograma.png", bbox_inches="tight", dpi=180)
@@ -124,7 +124,7 @@ print("Guardado: 03_validacion_cruzada.csv")
 fig, axes = plt.subplots(2, 2, figsize=(13, 11))
 algo_results = [
     ("K-Means++", labels_km),
-    ("Ward (jerárquico)", labels_ward),
+    ("Ward (hierarchical)", labels_ward),
     ("DBSCAN", labels_db),
     ("GMM", labels_gmm),
 ]
@@ -138,13 +138,13 @@ for ax, (title, labs) in zip(axes.flat, algo_results):
     ax.scatter(X_pca[:, 0], X_pca[:, 1], c=c_list,
                s=55, alpha=0.82, edgecolors="white", linewidths=0.4)
     handles = [mpatches.Patch(color=cmap[l],
-               label=("Outlier" if l == -1 else f"Clúster {l+1}")) for l in unique]
+               label=("Outlier" if l == -1 else f"Cluster {l+1}")) for l in unique]
     ax.legend(handles=handles, fontsize=8, loc="best")
     ax.set_title(title, fontsize=11)
     ax.set_xlabel("PC1", fontsize=9)
     ax.set_ylabel("PC2", fontsize=9)
 
-fig.suptitle("Comparación de algoritmos de clustering — Espacio PCA (PC1 vs PC2)",
+fig.suptitle("Clustering algorithm comparison — PCA space (PC1 vs PC2)",
              fontsize=13, y=1.01)
 fig.tight_layout()
 fig.savefig(FIG_DIR / "03c_scatter_todos.png", bbox_inches="tight")
@@ -157,7 +157,7 @@ fig, ax = plt.subplots(figsize=(11, 9))
 for cl in range(K):
     mask = labels_km == cl
     ax.scatter(X_pca[mask, 0], X_pca[mask, 1],
-               c=CLUSTER_COLORS[cl], s=70, label=f"Clúster {cl+1}",
+               c=CLUSTER_COLORS[cl], s=70, label=f"Cluster {cl+1}",
                alpha=0.85, edgecolors="white", linewidths=0.4, zorder=3)
 
 threshold_label = 1.5
@@ -172,7 +172,7 @@ ax.axhline(0, color="#B4B2A9", linewidth=0.5)
 ax.axvline(0, color="#B4B2A9", linewidth=0.5)
 ax.set_xlabel("PC1", fontsize=11)
 ax.set_ylabel("PC2", fontsize=11)
-ax.set_title(f"K-Means (k={K}) en espacio PCA — Universidades peruanas 2025", fontsize=12)
+ax.set_title(f"K-Means (k={K}) in PCA space — Peruvian universities 2025", fontsize=12)
 ax.legend(fontsize=9)
 fig.tight_layout()
 fig.savefig(FIG_DIR / "03b_scatter_kmeans.png", bbox_inches="tight")

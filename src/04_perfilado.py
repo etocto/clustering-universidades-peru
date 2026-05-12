@@ -42,11 +42,11 @@ K = len(np.unique(labels))
 
 df["cluster"] = labels + 1
 df["cluster_label"] = df["cluster"].map(
-    lambda c: {1: "Investigación\nconsolidada",
-               2: "Docencia\nestabilizada",
-               3: "Masificadas\nflexibilizadas",
-               4: "Regionales en\ndesarrollo",
-               5: f"Clúster 5"}.get(c, f"Clúster {c}")
+    lambda c: {1: "Research\nconsolidated",
+               2: "Teaching\nstabilized",
+               3: "Mass/flexible",
+               4: "Regional\ndeveloping",
+               5: f"Cluster 5"}.get(c, f"Cluster {c}")
 )
 
 print(f"Datos cargados: {len(df)} IES, {K} clústeres")
@@ -177,13 +177,13 @@ for cl in range(1, K + 1):
     label  = df[df["cluster"] == cl]["cluster_label"].iloc[0].replace("\n", " ")
     n_ies  = (df["cluster"] == cl).sum()
     radar_chart(ax, vals, FEATS_RADAR, CLUSTER_COLORS[cl - 1],
-                f"Clúster {cl} — {label}\n(n={n_ies})", max_vals, min_vals)
+                f"Cluster {cl} — {label}\n(n={n_ies})", max_vals, min_vals)
 
 # Ocultar ejes sobrantes
 for ax in list(axes_flat)[K:]:
     ax.set_visible(False)
 
-fig.suptitle("Perfil de clústeres — Radar charts (valores normalizados 0–1)",
+fig.suptitle("Cluster profiles — Radar charts (normalized values 0–1)",
              fontsize=13, y=1.01)
 fig.tight_layout()
 fig.savefig(FIG_DIR / "04a_radar_clusters.png", bbox_inches="tight")
@@ -204,13 +204,13 @@ sns.heatmap(
     linewidths=0.4,
     linecolor="#E8E6DF",
     ax=ax,
-    cbar_kws={"shrink": 0.6, "label": "Valor normalizado (0–1)"},
+    cbar_kws={"shrink": 0.6, "label": "Normalized value (0–1)"},
     annot_kws={"size": 9}
 )
-ax.set_yticklabels([f"Clúster {i}" for i in range(1, K + 1)], rotation=0, fontsize=10)
+ax.set_yticklabels([f"Cluster {i}" for i in range(1, K + 1)], rotation=0, fontsize=10)
 ax.set_xticklabels([f.replace("pct_","").replace("_"," ") for f in FEATS_CLAVE],
                    rotation=35, ha="right", fontsize=9)
-ax.set_title("Heatmap — Media por clúster (valores originales anotados)", fontsize=12, pad=12)
+ax.set_title("Heatmap — Cluster means (original values annotated)", fontsize=12, pad=12)
 fig.tight_layout()
 fig.savefig(FIG_DIR / "04b_heatmap_features.png", bbox_inches="tight")
 plt.close()
@@ -235,7 +235,7 @@ for ax, feat, label in zip(axes.flat, BOXPLOT_FEATS, BOXPLOT_LABELS):
     ax.set_xticklabels([f"C{i}" for i in range(1, K + 1)])
     ax.set_title(label, fontsize=10)
 
-fig.suptitle("Distribución de variables clave por clúster", fontsize=12, y=1.01)
+fig.suptitle("Key variable distribution by cluster", fontsize=12, y=1.01)
 fig.tight_layout()
 fig.savefig(FIG_DIR / "04c_boxplots_clave.png", bbox_inches="tight")
 plt.close()

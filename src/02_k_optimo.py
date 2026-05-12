@@ -44,12 +44,12 @@ for k in K_RANGE:
 fig, ax = plt.subplots(figsize=(7, 4))
 ax.plot(list(K_RANGE), inertias, marker="o", color="#7F77DD",
         linewidth=2, markersize=7, markerfacecolor="white", markeredgewidth=2)
-ax.set_xlabel("Número de clústeres (k)")
-ax.set_ylabel("Inercia (Within-cluster SS)")
-ax.set_title("Elbow method — Selección de k", fontsize=12)
+ax.set_xlabel("Number of clusters (k)")
+ax.set_ylabel("Inertia (Within-cluster SS)")
+ax.set_title("Elbow method — Optimal k selection", fontsize=12)
 ax.set_xticks(list(K_RANGE))
 
-# Marcar el codo automáticamente (diferencia de segunda derivada)
+# Mark elbow automatically
 diffs2 = np.diff(np.diff(inertias))
 elbow_k = list(K_RANGE)[np.argmax(diffs2) + 2]
 ax.axvline(elbow_k, color="#D85A30", linestyle="--", linewidth=1, alpha=0.7)
@@ -78,9 +78,9 @@ ax.plot(list(K_RANGE), sil_scores, marker="s", color="#1D9E75",
 ax.axvline(best_k_sil, color="#D85A30", linestyle="--", linewidth=1, alpha=0.7)
 ax.text(best_k_sil + 0.1, min(sil_scores) + 0.005,
         f"k={best_k_sil} (max)", color="#D85A30", fontsize=10)
-ax.set_xlabel("Número de clústeres (k)")
+ax.set_xlabel("Number of clusters (k)")
 ax.set_ylabel("Silhouette score")
-ax.set_title("Silhouette score — Cohesión y separación", fontsize=12)
+ax.set_title("Silhouette score — Cohesion and separation", fontsize=12)
 ax.set_xticks(list(K_RANGE))
 fig.tight_layout()
 fig.savefig(FIG_DIR / "02b_silhouette.png", bbox_inches="tight")
@@ -108,9 +108,9 @@ for i in range(k_plot):
 
 avg = sil_vals.mean()
 ax.axvline(avg, color="#D85A30", linestyle="--", linewidth=1)
-ax.text(avg + 0.01, y_lower - 10, f"media={avg:.3f}", color="#D85A30", fontsize=9)
+ax.text(avg + 0.01, y_lower - 10, f"mean={avg:.3f}", color="#D85A30", fontsize=9)
 ax.set_xlabel("Silhouette coefficient")
-ax.set_title(f"Diagrama silhouette — k={k_plot}", fontsize=12)
+ax.set_title(f"Silhouette diagram — k={k_plot}", fontsize=12)
 ax.set_yticks([])
 fig.tight_layout()
 fig.savefig(FIG_DIR / "02b2_silhouette_diagram.png", bbox_inches="tight")
@@ -159,9 +159,9 @@ ax.errorbar(list(K_RANGE), gaps, yerr=sks, marker="D", color="#BA7517",
             markerfacecolor="white", markeredgewidth=2)
 ax.axvline(best_k_gap, color="#D85A30", linestyle="--", linewidth=1, alpha=0.7)
 ax.text(best_k_gap + 0.1, min(gaps) + 0.01, f"k={best_k_gap}", color="#D85A30", fontsize=10)
-ax.set_xlabel("Número de clústeres (k)")
+ax.set_xlabel("Number of clusters (k)")
 ax.set_ylabel("Gap statistic")
-ax.set_title("Gap statistic — Criterio de Tibshirani et al. (2001)", fontsize=12)
+ax.set_title("Gap statistic — Tibshirani et al. (2001) criterion", fontsize=12)
 ax.set_xticks(list(K_RANGE))
 fig.tight_layout()
 fig.savefig(FIG_DIR / "02c_gap_statistic.png", bbox_inches="tight")

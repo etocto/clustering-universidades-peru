@@ -69,25 +69,25 @@ fig, ax = plt.subplots(figsize=(8, 4))
 n_show = min(12, len(var_ratio))
 bars = ax.bar(
     range(1, n_show + 1), var_ratio[:n_show] * 100,
-    color="#AFA9EC", edgecolor="#534AB7", linewidth=0.5, label="Varianza individual"
+    color="#AFA9EC", edgecolor="#534AB7", linewidth=0.5, label="Individual variance"
 )
 ax2 = ax.twinx()
 ax2.plot(
     range(1, n_show + 1), var_cumul[:n_show] * 100,
-    color="#D85A30", marker="o", markersize=5, linewidth=1.5, label="Varianza acumulada"
+    color="#D85A30", marker="o", markersize=5, linewidth=1.5, label="Cumulative variance"
 )
 ax2.axhline(90, color="#D85A30", linestyle="--", linewidth=0.8, alpha=0.6)
 ax2.axvline(n_comp_90, color="#888780", linestyle=":", linewidth=0.8)
 ax2.text(n_comp_90 + 0.1, 91, f"PC{n_comp_90} = 90%", fontsize=9, color="#D85A30")
-ax.set_xlabel("Componente principal")
-ax.set_ylabel("Varianza individual (%)")
-ax2.set_ylabel("Varianza acumulada (%)")
+ax.set_xlabel("Principal component")
+ax.set_ylabel("Individual variance (%)")
+ax2.set_ylabel("Cumulative variance (%)")
 ax2.set_ylim(0, 105)
 ax.set_xticks(range(1, n_show + 1))
 lines1, labels1 = ax.get_legend_handles_labels()
 lines2, labels2 = ax2.get_legend_handles_labels()
 ax.legend(lines1 + lines2, labels1 + labels2, fontsize=9, loc="center right")
-ax.set_title("Scree plot — Varianza explicada por componente principal", fontsize=12)
+ax.set_title("Scree plot — Explained variance by principal component", fontsize=12)
 fig.tight_layout()
 fig.savefig(FIG_DIR / "01a_scree_plot.png", bbox_inches="tight")
 plt.close()
@@ -102,9 +102,9 @@ ax.axhline(90, color="#D85A30", linestyle="--", linewidth=0.8)
 ax.axvline(n_comp_90, color="#D85A30", linestyle="--", linewidth=0.8)
 ax.fill_between(range(1, n_comp_90 + 1), var_cumul[:n_comp_90] * 100,
                 alpha=0.15, color="#7F77DD")
-ax.set_xlabel("Número de componentes")
-ax.set_ylabel("Varianza acumulada (%)")
-ax.set_title("Varianza acumulada por PCA", fontsize=12)
+ax.set_xlabel("Number of components")
+ax.set_ylabel("Cumulative variance (%)")
+ax.set_title("Cumulative variance explained by PCA", fontsize=12)
 ax.set_ylim(0, 105)
 ax.set_xticks(range(1, len(var_ratio) + 1))
 fig.tight_layout()
@@ -144,12 +144,12 @@ for j, feat in enumerate(FEATURE_COLS):
 
 ax.axhline(0, color="#B4B2A9", linewidth=0.5)
 ax.axvline(0, color="#B4B2A9", linewidth=0.5)
-ax.set_xlabel(f"PC1 ({var_ratio[0]*100:.1f}% varianza)", fontsize=11)
-ax.set_ylabel(f"PC2 ({var_ratio[1]*100:.1f}% varianza)", fontsize=11)
-ax.set_title("Biplot PCA — Universidades peruanas (PC1 vs PC2)", fontsize=13)
+ax.set_xlabel(f"PC1 ({var_ratio[0]*100:.1f}% variance)", fontsize=11)
+ax.set_ylabel(f"PC2 ({var_ratio[1]*100:.1f}% variance)", fontsize=11)
+ax.set_title("PCA Biplot — Peruvian universities (PC1 vs PC2)", fontsize=13)
 
-leg = [mpatches.Patch(color="#7F77DD", label="Pública"),
-       mpatches.Patch(color="#D85A30", label="Privada")]
+leg = [mpatches.Patch(color="#7F77DD", label="Public"),
+       mpatches.Patch(color="#D85A30", label="Private")]
 ax.legend(handles=leg, fontsize=9)
 fig.tight_layout()
 fig.savefig(FIG_DIR / "01b_biplot_pc1_pc2.png", bbox_inches="tight")
