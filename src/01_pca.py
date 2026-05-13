@@ -4,7 +4,7 @@
 Análisis de Componentes Principales (PCA) sobre la matriz estandarizada.
 Genera:
   - outputs/figures/01a_scree_plot.png
-  - outputs/figures/01b_biplot_pc1_pc2.png
+  - outputs/figures/01b_biplot_pc1_pc2.png  ← con siglas oficiales
   - outputs/figures/01c_varianza_acumulada.png
   - outputs/tables/01_pca_loadings.csv
 """
@@ -23,8 +23,115 @@ from config import (DATA_DIR, FIG_DIR, TABLE_DIR, FEATURE_COLS,
 
 plt.rcParams.update(MPL_STYLE)
 
+# ── Siglas oficiales de cada universidad ──────────────────────────────────────
+SIGLAS = {
+    "Universidad Nacional Agraria La Molina":                              "UNALM",
+    "Universidad Nacional Agraria de la Selva":                            "UNAS",
+    "Universidad Marcelino Champagnat":                                    "UMCH",
+    "Universidad Autónoma del Perú S.A.C.":                                "Autónoma",
+    "Universidad para el Desarrollo Andino":                               "UDEA",
+    "Universidad Nacional de Tumbes":                                      "UNTUMBES",
+    "Universidad de Piura":                                                "UDEP",
+    "Universidad Tecnológica del Perú S.A.C.":                            "UTP",
+    "Universidad de Huánuco":                                              "UDH",
+    "Universidad Andina del Cusco":                                        "UAC",
+    "Universidad Nacional de Cajamarca":                                   "UNC",
+    "Universidad Privada de Huancayo Franklin Roosevelt S.A.C.":          "U. Roosevelt",
+    "Universidad del Pacífico":                                            "UP",
+    "Universidad ESAN":                                                    "ESAN",
+    "Universidad Nacional Intercultural de Quillabamba":                   "UNIQ",
+    "Universidad Católica de Trujillo Benedicto XVI":                      "UCT",
+    "Universidad Nacional Autónoma de Tayacaja Daniel Hernández Morillo":  "UNAT",
+    "Universidad Nacional de Juliaca":                                     "UNAJ",
+    "Universidad San Pedro":                                               "USP",
+    "Universidad Nacional de Frontera":                                    "UNF",
+    "Universidad Nacional José María Arguedas":                            "UNAJMA",
+    "Universidad José Carlos Mariátegui":                                  "UJCM",
+    "Universidad César Vallejo S.A.C.":                                    "UCV",
+    "Universidad Nacional Micaela Bastidas de Apurímac":                   "UNAMBA",
+    "Universidad Católica Santo Toribio de Mogrovejo":                     "USAT",
+    "Universidad Privada de Pucallpa S.A.C.":                             "UPP",
+    "Universidad Nacional del Altiplano":                                  "UNA Puno",
+    "Universidad Católica de Santa María":                                 "UCSM",
+    "Universidad Inca Garcilaso de la Vega Asociación Civil":              "UIGV",
+    "Universidad Señor de Sipán S.A.C.":                                  "USS",
+    "Universidad Nacional Toribio Rodríguez de Mendoza de Amazonas":       "UNTRM",
+    "Universidad Antonio Ruiz de Montoya":                                 "UARM",
+    "Universidad Católica San Pablo":                                      "UCSP",
+    "Universidad Nacional Federico Villarreal":                            "UNFV",
+    "Universidad Nacional Amazónica de Madre de Dios":                     "UNAMAD",
+    "Universidad Privada Antenor Orrego":                                  "UPAO",
+    "Universidad Católica Los Ángeles de Chimbote":                        "ULADECH",
+    "Universidad Femenina del Sagrado Corazón":                            "UNIFE",
+    "Universidad de Lima":                                                 "ULIMA",
+    "Escuela de Postgrado Gerens S.A.":                                    "GERENS",
+    "Universidad Nacional Hermilio Valdizán de Huánuco":                   "UNHEVAL",
+    "Universidad Continental S.A.C.":                                     "Continental",
+    "Pontificia Universidad Católica del Perú":                            "PUCP",
+    "Universidad Privada del Norte S.A.C.":                               "UPN",
+    "Universidad Científica del Sur S.A.C.":                              "UCSUR",
+    "Universidad Católica Sedes Sapientiae":                               "UCSS",
+    "Universidad Nacional del Callao":                                     "UNAC",
+    "Universidad Ricardo Palma":                                           "URP",
+    "Universidad Privada San Juan Bautista S.A.C.":                       "UPSJB",
+    "Universidad Nacional de Cañete":                                      "UNDC",
+    "Universidad Nacional Tecnológica de Lima Sur":                        "UNTELS",
+    "Universidad Nacional Santiago Antúnez de Mayolo":                     "UNASAM",
+    "Universidad de Ingeniería y Tecnología":                              "UTEC",
+    "Universidad Peruana de Ciencias Aplicadas S.A.C.":                   "UPC",
+    "Universidad Privada Norbert Wiener S.A.":                            "U. Wiener",
+    "Facultad de Teología Pontificia y Civil de Lima":                     "FTPCL",
+    "Universidad Nacional de Moquegua":                                    "UNAM",
+    "Universidad Nacional Daniel Alcides Carrión":                         "UNDAC",
+    "Universidad Nacional de San Agustín de Arequipa":                     "UNSA",
+    "Universidad Nacional de Jaén":                                        "UNJ",
+    "Universidad Peruana Los Andes":                                       "UPLA",
+    "Universidad Le Cordon Bleu S.A.C.":                                  "ULCB",
+    "Asociación Civil Universidad de Ciencias y Humanidades":              "UCH",
+    "Universidad Privada de Tacna":                                        "UPT",
+    "Universidad de San Martín de Porres":                                 "USMP",
+    "Universidad Nacional de Piura":                                       "UNP",
+    "Universidad Nacional de San Martín":                                  "UNSM",
+    "Universidad Nacional Autónoma de Chota":                              "UNACH",
+    "Universidad Nacional José Faustino Sánchez Carrión":                  "UNJFSC",
+    "Universidad Nacional Intercultural de la Selva Central Juan Santos Atahualpa": "UNISCJSA",
+    "Universidad Nacional Autónoma de Huanta":                             "UNAH",
+    "Universidad María Auxiliadora S.A.C.":                               "UMA",
+    "Universidad Peruana Unión":                                           "UPeU",
+    "Universidad Nacional de Huancavelica":                                "UNH",
+    "Universidad Andina Néstor Cáceres Velásquez":                         "UANCV",
+    "Universidad Nacional Pedro Ruiz Gallo":                               "UNPRG",
+    "Universidad Alas Peruanas S.A.":                                     "UAP",
+    "Universidad Peruana Cayetano Heredia":                                "UPCH",
+    "Universidad Jaime Bausate y Meza":                                    "UJBM",
+    "Universidad Nacional de San Cristóbal de Huamanga":                   "UNSCH",
+    "Universidad Nacional Mayor de San Marcos":                            "UNMSM",
+    "Universidad Nacional de la Amazonía Peruana":                         "UNAP",
+    "Universidad Científica del Perú":                                     "UCP",
+    "Universidad de Ciencias y Artes de América Latina S.A.C.":           "UCAL",
+    "Universidad Nacional del Centro del Perú":                            "UNCP",
+    "Escuela de Posgrado Newman S.A.C.":                                  "Newman",
+    "Universidad San Ignacio de Loyola S.R.L.":                           "USIL",
+    'Escuela Nacional Superior de Arte Dramático "Guillermo Ugarte Chamorro"': "ENSAD",
+    "Escuela Nacional Superior de Folklore José María Arguedas":           "ENSF",
+    "Escuela Superior de Guerra Naval":                                    "ESGUERN",
+    "Conservatorio Regional de Música Luis Duncker Lavalle":               "Duncker",
+    "Instituto Superior de Música Público Daniel Alomía Robles de Huánuco": "UNDAR",
+    "Escuela Superior de Formación Artística Sérvulo Gutiérrez Alarcón de Ica": "ESFA Ica",
+    "Escuela Superior de Música Pública José María Valle Riestra de Piura": "ESMU Piura",
+    "Escuela Nacional Superior de Ballet":                                 "ENSB",
+    'Escuela Superior de Arte Dramático "Virgilio Rodríguez Nache"':       "ESAD Trujillo",
+    "Escuela Superior de Formación Artística Pública Mario Urteaga Alvarado de Cajamarca": "ESFAP Cajamarca",
+    "Escuela Superior de Arte Pública Ignacio Merino de Piura":            "ESFAP Piura",
+    "Instituto Superior de Música Público Leandro Alviña Miranda del Cusco": "IM Cusco",
+}
 
-# ── 1. Cargar datos ─────────────────────────────────────────────────────────────
+def get_sigla(nombre):
+    """Retorna la sigla oficial o un nombre corto si no existe."""
+    return SIGLAS.get(nombre, nombre[:10] + "…")
+
+
+# ── 1. Cargar datos ───────────────────────────────────────────────────────────
 def cargar_datos():
     local = DATA_DIR / "matriz_escalada.csv"
     if local.exists():
@@ -38,33 +145,33 @@ df_scaled = cargar_datos()
 df_master = pd.read_csv(DATA_DIR / "matriz_maestra.csv") if (DATA_DIR / "matriz_maestra.csv").exists() \
             else pd.read_csv(DATA_URLS["maestra"])
 
-X = df_scaled[FEATURE_COLS].values
-unis = df_scaled["universidad"].values
-es_publico = df_master["es_publico"].values
+X           = df_scaled[FEATURE_COLS].values
+unis        = df_scaled["universidad"].values
+es_publico  = df_master["es_publico"].values
 print(f"Matriz cargada: {X.shape[0]} universidades × {X.shape[1]} features")
 
 
-# ── 2. Ajustar PCA ──────────────────────────────────────────────────────────────
+# ── 2. Ajustar PCA ────────────────────────────────────────────────────────────
 pca_full = PCA(random_state=42)
 pca_full.fit(X)
 
-var_ratio     = pca_full.explained_variance_ratio_
-var_cumul     = np.cumsum(var_ratio)
-n_comp_90     = int(np.argmax(var_cumul >= PCA_VARIANCE) + 1)
+var_ratio  = pca_full.explained_variance_ratio_
+var_cumul  = np.cumsum(var_ratio)
+n_comp_90  = int(np.argmax(var_cumul >= PCA_VARIANCE) + 1)
 
 print(f"\nVarianza explicada por componente:")
 for i, v in enumerate(var_ratio[:8]):
     print(f"  PC{i+1}: {v*100:.1f}%  (acum: {var_cumul[i]*100:.1f}%)")
 print(f"\nComponentes para retener {PCA_VARIANCE*100:.0f}% varianza: {n_comp_90}")
 
-pca = PCA(n_components=n_comp_90, random_state=42)
+pca   = PCA(n_components=n_comp_90, random_state=42)
 X_pca = pca.fit_transform(X)
 
 np.save(DATA_DIR / "X_pca.npy", X_pca)
 print(f"X_pca guardado en data/X_pca.npy  ({X_pca.shape})")
 
 
-# ── 3. Scree plot ───────────────────────────────────────────────────────────────
+# ── 3. Scree plot ─────────────────────────────────────────────────────────────
 fig, ax = plt.subplots(figsize=(8, 4))
 n_show = min(12, len(var_ratio))
 bars = ax.bar(
@@ -94,7 +201,7 @@ plt.close()
 print("Guardado: 01a_scree_plot.png")
 
 
-# ── 4. Varianza acumulada ───────────────────────────────────────────────────────
+# ── 4. Varianza acumulada ─────────────────────────────────────────────────────
 fig, ax = plt.subplots(figsize=(7, 4))
 ax.plot(range(1, len(var_cumul) + 1), var_cumul * 100,
         color="#7F77DD", marker="o", markersize=4, linewidth=1.5)
@@ -113,33 +220,35 @@ plt.close()
 print("Guardado: 01c_varianza_acumulada.png")
 
 
-# ── 5. Biplot PC1 vs PC2 ────────────────────────────────────────────────────────
-fig, ax = plt.subplots(figsize=(11, 9))
+# ── 5. Biplot PC1 vs PC2 — CON SIGLAS ────────────────────────────────────────
+fig, ax = plt.subplots(figsize=(13, 10))
 
-colors = ["#7F77DD" if p == 1 else "#D85A30" for p in es_publico]
+colors  = ["#7F77DD" if p == 1 else "#D85A30" for p in es_publico]
 scatter = ax.scatter(X_pca[:, 0], X_pca[:, 1], c=colors, s=60,
                      alpha=0.8, edgecolors="white", linewidths=0.4, zorder=3)
 
-# Etiquetas selectivas (IES con valores extremos en PC1 o PC2)
-pc1, pc2 = X_pca[:, 0], X_pca[:, 1]
-threshold = 1.8
+# Etiquetas con SIGLAS para todas las IES (umbral bajo para mostrar más)
+pc1, pc2  = X_pca[:, 0], X_pca[:, 1]
+threshold = 1.2   # más bajo que antes para mostrar más siglas
 for i, nombre in enumerate(unis):
     if abs(pc1[i]) > threshold or abs(pc2[i]) > threshold:
-        short = nombre[:28] + "…" if len(nombre) > 28 else nombre
-        ax.annotate(short, (pc1[i], pc2[i]),
-                    fontsize=7, alpha=0.85,
-                    xytext=(4, 4), textcoords="offset points")
+        sigla = get_sigla(nombre)
+        ax.annotate(sigla, (pc1[i], pc2[i]),
+                    fontsize=7, alpha=0.88,
+                    xytext=(4, 4), textcoords="offset points",
+                    fontweight="500")
 
 # Vectores de loadings (flechas de variables)
 loadings = pca.components_.T
-scale = 3.5
+scale    = 3.5
 for j, feat in enumerate(FEATURE_COLS):
     lx, ly = loadings[j, 0] * scale, loadings[j, 1] * scale
     if np.sqrt(lx**2 + ly**2) > 0.8:
         ax.annotate("", xy=(lx, ly), xytext=(0, 0),
                     arrowprops=dict(arrowstyle="->", color="#1D9E75",
                                    lw=1.2, alpha=0.7))
-        ax.text(lx * 1.08, ly * 1.08, feat.replace("pct_", "").replace("_", " "),
+        ax.text(lx * 1.08, ly * 1.08,
+                feat.replace("pct_", "").replace("_", " "),
                 fontsize=7, color="#085041", alpha=0.85)
 
 ax.axhline(0, color="#B4B2A9", linewidth=0.5)
@@ -157,7 +266,7 @@ plt.close()
 print("Guardado: 01b_biplot_pc1_pc2.png")
 
 
-# ── 6. Tabla de loadings ────────────────────────────────────────────────────────
+# ── 6. Tabla de loadings ──────────────────────────────────────────────────────
 loadings_df = pd.DataFrame(
     pca.components_.T,
     index=FEATURE_COLS,
