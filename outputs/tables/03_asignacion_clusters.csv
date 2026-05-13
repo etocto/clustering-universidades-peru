@@ -1,100 +1,100 @@
 universidad,es_publico,cluster_kmeans,cluster_ward,cluster_gmm,cluster_dbscan,prob_cluster1_gmm,prob_cluster2_gmm
-Universidad Nacional Agraria La Molina,1,1,4,3,0,0.0,0.0
-Universidad Nacional Agraria de la Selva,1,1,4,3,0,0.0,0.0
-Universidad Marcelino Champagnat,0,3,2,1,0,1.0,0.0
-Universidad Autónoma del Perú S.A.C.,0,3,2,1,0,1.0,0.0
-Universidad para el Desarrollo Andino,0,3,2,2,0,0.0,1.0
-Universidad Nacional de Tumbes,1,1,4,3,0,0.0,0.0
-Universidad de Piura,0,3,2,1,0,1.0,0.0
-Universidad Tecnológica del Perú S.A.C.,0,3,2,1,0,1.0,0.0
-Universidad de Huánuco,0,3,2,3,0,0.022,0.0
-Universidad Andina del Cusco,0,3,4,3,0,0.0,0.0
-Universidad Nacional de Cajamarca,1,1,4,3,0,0.0,0.0
-Universidad Privada de Huancayo Franklin Roosevelt S.A.C.,0,3,2,1,0,1.0,0.0
-Universidad del Pacífico,0,3,2,1,0,1.0,0.0
-Universidad ESAN,0,3,2,1,0,1.0,0.0
-Universidad Nacional Intercultural de Quillabamba,1,1,4,3,0,0.0,0.0
-Universidad Católica de Trujillo Benedicto XVI,0,3,2,1,0,1.0,0.0
-Universidad Nacional Autónoma de Tayacaja Daniel Hernández Morillo,1,1,4,3,0,0.0,0.0
-Universidad Nacional de Juliaca,1,1,4,3,0,0.0,0.0
-Universidad San Pedro,0,1,4,3,0,0.0,0.0
-Universidad Nacional de Frontera,1,1,4,3,0,0.0,0.0
-Universidad Nacional José María Arguedas,1,1,4,3,0,0.0,0.0
-Universidad José Carlos Mariátegui,0,1,4,3,0,0.0,0.0
-Universidad César Vallejo S.A.C.,0,3,2,1,0,1.0,0.0
-Universidad Nacional Micaela Bastidas de Apurímac,1,1,4,3,0,0.0,0.0
-Universidad Católica Santo Toribio de Mogrovejo,0,3,2,1,0,0.988,0.0
-Universidad Privada de Pucallpa S.A.C.,0,3,2,1,0,1.0,0.0
-Universidad Nacional del Altiplano,1,1,2,3,0,0.0,0.0
-Universidad Católica de Santa María,0,3,2,1,0,0.811,0.0
-Universidad Inca Garcilaso de la Vega Asociación Civil,0,3,2,1,0,1.0,0.0
-Universidad Señor de Sipán S.A.C.,0,3,2,1,0,0.998,0.0
-Universidad Nacional Toribio Rodríguez de Mendoza de Amazonas,1,1,4,3,0,0.0,0.0
-Universidad Antonio Ruiz de Montoya,0,3,2,1,0,0.996,0.0
-Universidad Católica San Pablo,0,3,2,1,0,0.996,0.0
-Universidad Nacional Federico Villarreal,1,1,4,3,0,0.0,0.0
-Universidad Nacional Amazónica de Madre de Dios,1,3,2,3,0,0.0,0.0
-Universidad Privada Antenor Orrego,0,3,2,1,0,0.825,0.0
-Universidad Católica Los Ángeles de Chimbote,0,3,2,4,-1,0.0,0.0
-Universidad Femenina del Sagrado Corazón,0,3,2,1,0,1.0,0.0
-Universidad de Lima,0,1,2,1,0,0.606,0.0
-Escuela de Postgrado Gerens S.A.,0,2,3,2,-1,0.0,1.0
-Universidad Nacional Hermilio Valdizán de Huánuco,1,1,4,3,0,0.0,0.0
-Universidad Continental S.A.C.,0,3,2,1,0,1.0,0.0
-Pontificia Universidad Católica del Perú,0,3,2,3,0,0.0,0.0
-Universidad Privada del Norte S.A.C.,0,3,2,1,0,1.0,0.0
-Universidad Científica del Sur S.A.C.,0,3,2,1,0,0.998,0.0
-Universidad Católica Sedes Sapientiae,0,3,2,1,0,1.0,0.0
-Universidad Nacional del Callao,1,1,4,3,0,0.0,0.0
-Universidad Ricardo Palma,0,3,2,1,0,1.0,0.0
-Universidad Privada San Juan Bautista S.A.C.,0,3,2,1,0,1.0,0.0
-Universidad Nacional de Cañete,1,1,4,3,0,0.0,0.0
-Universidad Nacional Tecnológica de Lima Sur,1,1,4,3,0,0.0,0.0
-Universidad Nacional Santiago Antúnez de Mayolo,1,1,4,3,0,0.0,0.0
-Universidad de Ingeniería y Tecnología,0,3,2,1,0,1.0,0.0
-Universidad Peruana de Ciencias Aplicadas S.A.C.,0,3,2,1,0,0.991,0.0
-Universidad Privada Norbert Wiener S.A.,0,3,2,1,0,1.0,0.0
-Facultad de Teología Pontificia y Civil de Lima,0,3,2,2,0,0.0,1.0
-Universidad Nacional de Moquegua,1,3,2,3,0,0.001,0.0
-Universidad Nacional Daniel Alcides Carrión,1,3,2,1,0,0.981,0.0
-Universidad Nacional de San Agustín de Arequipa,1,1,4,3,0,0.0,0.0
-Universidad Nacional de Jaén,1,1,4,3,0,0.0,0.0
-Universidad Peruana Los Andes,0,3,2,1,0,0.595,0.0
-Universidad Le Cordon Bleu S.A.C.,0,3,2,1,0,0.999,0.0
-Asociación Civil Universidad de Ciencias y Humanidades,0,3,2,1,0,0.997,0.0
-Universidad Privada de Tacna,0,3,2,1,0,1.0,0.0
-Universidad de San Martín de Porres,0,3,2,1,0,1.0,0.0
-Universidad Nacional de Piura,1,1,4,3,0,0.0,0.0
-Universidad Nacional de San Martín,1,1,4,3,0,0.0,0.0
-Universidad Nacional Autónoma de Chota,1,1,4,3,0,0.0,0.0
-Universidad Nacional José Faustino Sánchez Carrión,1,1,4,3,0,0.0,0.0
-Universidad Nacional Intercultural de la Selva Central Juan Santos Atahualpa,1,3,2,1,0,1.0,0.0
-Universidad Nacional Autónoma de Huanta,1,1,2,3,0,0.0,0.0
-Universidad María Auxiliadora S.A.C.,0,3,2,1,0,1.0,0.0
-Universidad Peruana Unión,0,3,2,1,0,1.0,0.0
-Universidad Nacional de Huancavelica,1,1,4,3,0,0.0,0.0
-Universidad Andina Néstor Cáceres Velásquez,0,1,4,2,0,0.0,1.0
-Universidad Nacional Pedro Ruiz Gallo,1,1,2,3,0,0.0,0.0
-Universidad Alas Peruanas S.A.,0,3,2,1,0,1.0,0.0
-Universidad Peruana Cayetano Heredia,0,3,2,3,0,0.0,0.0
-Universidad Jaime Bausate y Meza,0,3,4,1,0,0.978,0.0
-Universidad Nacional de San Cristóbal de Huamanga,1,1,2,3,0,0.0,0.0
-Universidad Nacional Mayor de San Marcos,1,1,4,3,0,0.0,0.0
-Universidad Nacional de la Amazonía Peruana,1,1,4,3,0,0.0,0.0
-Universidad Científica del Perú,0,3,2,3,0,0.008,0.0
-Universidad de Ciencias y Artes de América Latina S.A.C.,0,3,2,1,0,1.0,0.0
-Universidad Nacional del Centro del Perú,1,1,4,3,0,0.0,0.0
-Escuela de Posgrado Newman S.A.C.,0,2,3,2,-1,0.0,1.0
-Universidad San Ignacio de Loyola S.R.L.,0,3,2,1,0,1.0,0.0
-"Escuela Nacional Superior de Arte Dramático ""Guillermo Ugarte Chamorro""",1,3,2,1,0,1.0,0.0
-Escuela Nacional Superior de Folklore José María Arguedas,1,3,2,1,0,1.0,0.0
-Escuela Superior de Guerra Naval,1,2,3,2,-1,0.0,1.0
-Conservatorio Regional de Música Luis Duncker Lavalle,1,4,1,4,0,0.0,0.0
-Instituto Superior de Música Público Daniel Alomía Robles de Huánuco,1,4,1,4,0,0.0,0.0
-Escuela Superior de Formación Artística Sérvulo Gutiérrez Alarcón de Ica,1,4,1,4,0,0.0,0.0
-Escuela Superior de Música Pública José María Valle Riestra de Piura,1,1,4,3,0,0.0,0.0
-Escuela Nacional Superior de Ballet,1,1,4,2,-1,0.0,1.0
-"Escuela Superior de Arte Dramático ""Virgilio Rodríguez Nache""",1,4,1,4,0,0.0,0.0
-Escuela Superior de Formación Artística Pública Mario Urteaga Alvarado de Cajamarca,1,4,1,4,0,0.0,0.0
-Escuela Superior de Arte Pública Ignacio Merino de Piura,1,4,1,4,0,0.0,0.0
-Instituto Superior de Música Público Leandro Alviña Miranda del Cusco,1,4,1,4,0,0.0,0.0
+Universidad Nacional Agraria La Molina,1,2,3,1,0,1.0,0.0
+Universidad Nacional Agraria de la Selva,1,2,3,1,0,1.0,0.0
+Universidad Marcelino Champagnat,0,1,4,3,0,0.0,0.0
+Universidad Autónoma del Perú S.A.C.,0,1,4,3,0,0.0,0.0
+Universidad para el Desarrollo Andino,0,1,4,3,0,0.0,0.0
+Universidad Nacional de Tumbes,1,2,3,1,0,0.989,0.0
+Universidad de Piura,0,1,4,3,0,0.001,0.0
+Universidad Tecnológica del Perú S.A.C.,0,1,4,3,0,0.0,0.0
+Universidad de Huánuco,0,1,4,3,0,0.0,0.0
+Universidad Andina del Cusco,0,1,4,1,0,1.0,0.0
+Universidad Nacional de Cajamarca,1,2,3,1,0,1.0,0.0
+Universidad Privada de Huancayo Franklin Roosevelt S.A.C.,0,1,4,3,0,0.0,0.0
+Universidad del Pacífico,0,1,4,3,0,0.0,0.0
+Universidad ESAN,0,1,4,3,0,0.0,0.0
+Universidad Nacional Intercultural de Quillabamba,1,2,3,1,0,1.0,0.0
+Universidad Católica de Trujillo Benedicto XVI,0,1,4,3,0,0.0,0.0
+Universidad Nacional Autónoma de Tayacaja Daniel Hernández Morillo,1,2,3,1,0,1.0,0.0
+Universidad Nacional de Juliaca,1,2,3,1,0,1.0,0.0
+Universidad San Pedro,0,2,3,1,0,1.0,0.0
+Universidad Nacional de Frontera,1,2,3,1,0,1.0,0.0
+Universidad Nacional José María Arguedas,1,2,4,1,0,1.0,0.0
+Universidad José Carlos Mariátegui,0,2,3,1,-1,1.0,0.0
+Universidad César Vallejo S.A.C.,0,1,4,3,0,0.0,0.0
+Universidad Nacional Micaela Bastidas de Apurímac,1,2,3,1,0,1.0,0.0
+Universidad Católica Santo Toribio de Mogrovejo,0,1,4,3,0,0.002,0.0
+Universidad Privada de Pucallpa S.A.C.,0,4,1,4,0,0.0,0.0
+Universidad Nacional del Altiplano,1,2,3,1,0,0.999,0.0
+Universidad Católica de Santa María,0,1,4,3,0,0.0,0.0
+Universidad Inca Garcilaso de la Vega Asociación Civil,0,1,4,3,0,0.0,0.0
+Universidad Señor de Sipán S.A.C.,0,1,4,3,0,0.0,0.0
+Universidad Nacional Toribio Rodríguez de Mendoza de Amazonas,1,2,3,1,0,1.0,0.0
+Universidad Antonio Ruiz de Montoya,0,1,4,3,0,0.0,0.0
+Universidad Católica San Pablo,0,1,4,3,0,0.0,0.0
+Universidad Nacional Federico Villarreal,1,2,4,1,0,1.0,0.0
+Universidad Nacional Amazónica de Madre de Dios,1,1,3,1,0,0.997,0.0
+Universidad Privada Antenor Orrego,0,1,4,3,0,0.0,0.0
+Universidad Católica Los Ángeles de Chimbote,0,1,3,1,-1,1.0,0.0
+Universidad Femenina del Sagrado Corazón,0,1,4,3,0,0.0,0.0
+Universidad de Lima,0,1,4,3,0,0.002,0.0
+Escuela de Postgrado Gerens S.A.,0,3,2,4,-1,0.0,0.0
+Universidad Nacional Hermilio Valdizán de Huánuco,1,2,3,1,0,1.0,0.0
+Universidad Continental S.A.C.,0,1,4,3,0,0.0,0.0
+Pontificia Universidad Católica del Perú,0,1,4,3,0,0.0,0.0
+Universidad Privada del Norte S.A.C.,0,1,4,3,0,0.0,0.0
+Universidad Científica del Sur S.A.C.,0,1,4,3,0,0.0,0.0
+Universidad Católica Sedes Sapientiae,0,1,4,3,0,0.0,0.0
+Universidad Nacional del Callao,1,2,3,1,0,1.0,0.0
+Universidad Ricardo Palma,0,2,4,3,0,0.002,0.0
+Universidad Privada San Juan Bautista S.A.C.,0,1,4,3,0,0.0,0.0
+Universidad Nacional de Cañete,1,2,3,1,0,1.0,0.0
+Universidad Nacional Tecnológica de Lima Sur,1,2,3,1,0,1.0,0.0
+Universidad Nacional Santiago Antúnez de Mayolo,1,2,4,1,0,1.0,0.0
+Universidad de Ingeniería y Tecnología,0,1,4,3,0,0.0,0.0
+Universidad Peruana de Ciencias Aplicadas S.A.C.,0,1,4,3,0,0.0,0.0
+Universidad Privada Norbert Wiener S.A.,0,1,4,3,0,0.0,0.0
+Facultad de Teología Pontificia y Civil de Lima,0,4,4,4,0,0.0,0.0
+Universidad Nacional de Moquegua,1,2,3,1,0,0.512,0.0
+Universidad Nacional Daniel Alcides Carrión,1,1,4,3,0,0.001,0.0
+Universidad Nacional de San Agustín de Arequipa,1,2,3,1,0,1.0,0.0
+Universidad Nacional de Jaén,1,2,3,1,-1,1.0,0.0
+Universidad Peruana Los Andes,0,1,4,3,0,0.001,0.0
+Universidad Le Cordon Bleu S.A.C.,0,1,4,3,0,0.0,0.0
+Asociación Civil Universidad de Ciencias y Humanidades,0,1,4,3,0,0.0,0.0
+Universidad Privada de Tacna,0,1,4,3,0,0.0,0.0
+Universidad de San Martín de Porres,0,1,4,3,0,0.0,0.0
+Universidad Nacional de Piura,1,2,3,1,0,1.0,0.0
+Universidad Nacional de San Martín,1,2,3,1,0,1.0,0.0
+Universidad Nacional Autónoma de Chota,1,2,3,1,0,1.0,0.0
+Universidad Nacional José Faustino Sánchez Carrión,1,2,3,1,0,1.0,0.0
+Universidad Nacional Intercultural de la Selva Central Juan Santos Atahualpa,1,1,4,3,0,0.001,0.0
+Universidad Nacional Autónoma de Huanta,1,2,3,1,0,1.0,0.0
+Universidad María Auxiliadora S.A.C.,0,1,4,3,0,0.0,0.0
+Universidad Peruana Unión,0,1,4,3,0,0.0,0.0
+Universidad Nacional de Huancavelica,1,2,3,1,0,1.0,0.0
+Universidad Andina Néstor Cáceres Velásquez,0,2,4,1,0,1.0,0.0
+Universidad Nacional Pedro Ruiz Gallo,1,2,3,1,0,1.0,0.0
+Universidad Alas Peruanas S.A.,0,1,4,3,-1,0.0,0.0
+Universidad Peruana Cayetano Heredia,0,1,4,3,0,0.0,0.0
+Universidad Jaime Bausate y Meza,0,4,1,4,0,0.0,0.0
+Universidad Nacional de San Cristóbal de Huamanga,1,1,4,3,0,0.005,0.0
+Universidad Nacional Mayor de San Marcos,1,2,4,1,0,1.0,0.0
+Universidad Nacional de la Amazonía Peruana,1,2,3,1,0,1.0,0.0
+Universidad Científica del Perú,0,2,4,3,0,0.0,0.0
+Universidad de Ciencias y Artes de América Latina S.A.C.,0,1,4,3,0,0.0,0.0
+Universidad Nacional del Centro del Perú,1,2,3,1,0,1.0,0.0
+Escuela de Posgrado Newman S.A.C.,0,3,4,3,-1,0.0,0.0
+Universidad San Ignacio de Loyola S.R.L.,0,1,4,3,0,0.0,0.0
+"Escuela Nacional Superior de Arte Dramático ""Guillermo Ugarte Chamorro""",1,4,1,4,0,0.0,0.0
+Escuela Nacional Superior de Folklore José María Arguedas,1,4,1,4,0,0.0,0.0
+Escuela Superior de Guerra Naval,1,3,2,4,-1,0.0,0.0
+Conservatorio Regional de Música Luis Duncker Lavalle,1,4,1,2,0,0.0,1.0
+Instituto Superior de Música Público Daniel Alomía Robles de Huánuco,1,4,1,2,0,0.0,1.0
+Escuela Superior de Formación Artística Sérvulo Gutiérrez Alarcón de Ica,1,4,1,2,0,0.0,1.0
+Escuela Superior de Música Pública José María Valle Riestra de Piura,1,4,1,2,0,0.0,1.0
+Escuela Nacional Superior de Ballet,1,4,2,4,-1,0.0,0.0
+"Escuela Superior de Arte Dramático ""Virgilio Rodríguez Nache""",1,4,1,2,0,0.0,1.0
+Escuela Superior de Formación Artística Pública Mario Urteaga Alvarado de Cajamarca,1,4,1,2,0,0.0,1.0
+Escuela Superior de Arte Pública Ignacio Merino de Piura,1,4,1,2,0,0.0,1.0
+Instituto Superior de Música Público Leandro Alviña Miranda del Cusco,1,4,1,2,0,0.0,1.0

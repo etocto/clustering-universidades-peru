@@ -81,18 +81,18 @@ FEATURE_GROUPS = {
 # ── Nombres de clústeres (fuente única de verdad) ─────────────────────────────
 # Español — usado en tablas CSV y figuras en español
 CLUSTER_NAMES = {
-    1: "Universidades Estabilizadas",
-    2: "Escuelas de Posgrado",
-    3: "Universidades Masivas con Docencia Flexible",
-    4: "Instituciones Regionales en Desarrollo",
+    1: "Universidades con Docencia Flexible e Investigación Activa",
+    2: "Universidades Institucionalmente Consolidadas con Investigación",
+    3: "Instituciones de Formación Posgradual Especializada",
+    4: "Instituciones sin Integración Investigadora",
 }
 
 # Inglés — usado en figuras y papers en inglés
 CLUSTER_NAMES_EN = {
-    1: "Stabilized Universities",
-    2: "Postgraduate Schools",
-    3: "Mass Universities\nFlexible Teaching",
-    4: "Regional Developing\nInstitutions",
+    1: "Flexible Teaching Universities\nwith Active Research",
+    2: "Institutionally Consolidated\nUniversities with Research",
+    3: "Specialized Postgraduate\nInstitutions",
+    4: "Institutions without\nResearch Integration",
 }
 
 # Colores por clúster (paleta daltónica)
