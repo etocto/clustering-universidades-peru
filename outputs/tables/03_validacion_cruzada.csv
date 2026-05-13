@@ -1,0 +1,4 @@
+par,ARI,NMI
+K-Means vs Ward,0.757,0.758
+K-Means vs GMM,0.633,0.619
+Ward vs GMM,0.55,0.572
