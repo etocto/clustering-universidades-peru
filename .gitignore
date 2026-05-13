@@ -3,9 +3,6 @@ __pycache__/
 *.pyc
 .env
 .vscode/settings.json
-outputs/figures/*.png
-outputs/figures/*.pdf
-outputs/tables/*.csv
 *.egg-info/
 dist/
 .DS_Store
