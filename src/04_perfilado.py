@@ -29,35 +29,33 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from config import (DATA_DIR, FIG_DIR, TABLE_DIR, FEATURE_COLS,
-                    MPL_STYLE, CLUSTER_COLORS, DATA_URLS)
+                    MPL_STYLE, CLUSTER_COLORS, DATA_URLS,
+                    CLUSTER_NAMES, CLUSTER_NAMES_EN)
 
 plt.rcParams.update(MPL_STYLE)
 
 
-# ── 1. Cargar datos ─────────────────────────────────────────────────────────────
+# ── 1. Cargar datos ───────────────────────────────────────────────────────────
 local_m = DATA_DIR / "matriz_maestra.csv"
 df = pd.read_csv(local_m) if local_m.exists() else pd.read_csv(DATA_URLS["maestra"])
 labels = np.load(DATA_DIR / "labels_final.npy")
 K = len(np.unique(labels))
 
 df["cluster"] = labels + 1
+# Usa los nombres en inglés para las figuras (compatibles con paper)
 df["cluster_label"] = df["cluster"].map(
-    lambda c: {1: "Research\nconsolidated",
-               2: "Teaching\nstabilized",
-               3: "Mass/flexible",
-               4: "Regional\ndeveloping",
-               5: f"Cluster 5"}.get(c, f"Cluster {c}")
+    lambda c: CLUSTER_NAMES_EN.get(c, f"Cluster {c}")
 )
 
 print(f"Datos cargados: {len(df)} IES, {K} clústeres")
 for cl in range(1, K + 1):
     sub = df[df["cluster"] == cl]
     pub = sub["es_publico"].sum()
-    print(f"  Clúster {cl} ({sub['cluster_label'].iloc[0].replace(chr(10),' ')}): "
+    print(f"  Clúster {cl} ({CLUSTER_NAMES[cl]}): "
           f"{len(sub)} IES  ({pub} pub / {len(sub)-pub} priv)")
 
 
-# ── 2. Features clave para figuras (subconjunto informativo) ───────────────────
+# ── 2. Features clave para figuras (subconjunto informativo) ──────────────────
 FEATS_RADAR = [
     "pct_doctorado", "pct_renacyt_doc", "pct_exclusiva",
     "pct_contratado", "nota_prom_egr", "puntaje_medio",
@@ -71,7 +69,7 @@ FEATS_CLAVE = [
 ]
 
 
-# ── 3. Tabla descriptiva ────────────────────────────────────────────────────────
+# ── 3. Tabla descriptiva ──────────────────────────────────────────────────────
 rows = []
 for cl in range(1, K + 1):
     sub = df[df["cluster"] == cl][FEATURE_COLS]
@@ -86,7 +84,7 @@ df_desc.to_csv(TABLE_DIR / "04_descriptiva_por_cluster.csv", index=False)
 print("Guardado: 04_descriptiva_por_cluster.csv")
 
 
-# ── 4. Kruskal-Wallis ──────────────────────────────────────────────────────────
+# ── 4. Kruskal-Wallis ─────────────────────────────────────────────────────────
 print("\nKruskal-Wallis:")
 kw_rows = []
 for col in FEATURE_COLS:
@@ -102,19 +100,15 @@ print(f"  Variables significativas (p<0.05): {len(sig_feats)}/{len(FEATURE_COLS)
 print(df_kw.head(10).to_string(index=False))
 
 
-# ── 5. Test post-hoc de Dunn ────────────────────────────────────────────────────
+# ── 5. Test post-hoc de Dunn ──────────────────────────────────────────────────
 def dunn_bonferroni(data, labels_col, value_col):
     groups  = data[labels_col].unique()
     pares   = list(combinations(sorted(groups), 2))
-    n_total = len(data)
     n_tests = len(pares)
     rows    = []
-    all_vals = data[value_col].rank().values
-    n_i_dict = data.groupby(labels_col).size()
     for g1, g2 in pares:
         r1 = data.loc[data[labels_col] == g1, value_col].rank(method="average")
         r2 = data.loc[data[labels_col] == g2, value_col].rank(method="average")
-        n1, n2 = len(r1), len(r2)
         u, p = stats.mannwhitneyu(
             data.loc[data[labels_col] == g1, value_col].values,
             data.loc[data[labels_col] == g2, value_col].values,
@@ -125,7 +119,7 @@ def dunn_bonferroni(data, labels_col, value_col):
                      "U": round(u, 1), "p_raw": round(p, 6),
                      "p_bonferroni": round(p_adj, 6),
                      "sig": "***" if p_adj < 0.001 else "**" if p_adj < 0.01
-                            else "*" if p_adj < 0.05 else "n.s."})
+                             else "*" if p_adj < 0.05 else "n.s."})
     return pd.DataFrame(rows)
 
 dunn_rows = []
@@ -139,7 +133,7 @@ if dunn_rows:
     print("Guardado: 04_dunn_posthoc.csv")
 
 
-# ── 6. Radar charts ─────────────────────────────────────────────────────────────
+# ── 6. Radar charts ───────────────────────────────────────────────────────────
 def radar_chart(ax, values, labels_radar, color, title, max_vals, min_vals):
     N = len(labels_radar)
     angles = [n / float(N) * 2 * np.pi for n in range(N)]
@@ -174,7 +168,7 @@ axes_flat = list(axes.flat) if K > 1 else [axes]
 for cl in range(1, K + 1):
     ax = axes_flat[cl - 1]
     vals   = df[df["cluster"] == cl][FEATS_RADAR].mean().values
-    label  = df[df["cluster"] == cl]["cluster_label"].iloc[0].replace("\n", " ")
+    label  = CLUSTER_NAMES_EN.get(cl, f"Cluster {cl}").replace("\n", " ")
     n_ies  = (df["cluster"] == cl).sum()
     radar_chart(ax, vals, FEATS_RADAR, CLUSTER_COLORS[cl - 1],
                 f"Cluster {cl} — {label}\n(n={n_ies})", max_vals, min_vals)
@@ -191,7 +185,7 @@ plt.close()
 print("Guardado: 04a_radar_clusters.png")
 
 
-# ── 7. Heatmap de features por clúster ─────────────────────────────────────────
+# ── 7. Heatmap de features por clúster ───────────────────────────────────────
 heat_data = df.groupby("cluster")[FEATS_CLAVE].mean()
 heat_data_norm = (heat_data - heat_data.min()) / (heat_data.max() - heat_data.min() + 1e-9)
 
@@ -207,7 +201,11 @@ sns.heatmap(
     cbar_kws={"shrink": 0.6, "label": "Normalized value (0–1)"},
     annot_kws={"size": 9}
 )
-ax.set_yticklabels([f"Cluster {i}" for i in range(1, K + 1)], rotation=0, fontsize=10)
+# Etiquetas de filas con nombre del clúster
+ax.set_yticklabels(
+    [f"C{i}: {CLUSTER_NAMES[i]}" for i in range(1, K + 1)],
+    rotation=0, fontsize=9
+)
 ax.set_xticklabels([f.replace("pct_","").replace("_"," ") for f in FEATS_CLAVE],
                    rotation=35, ha="right", fontsize=9)
 ax.set_title("Heatmap — Cluster means (original values annotated)", fontsize=12, pad=12)
@@ -217,9 +215,9 @@ plt.close()
 print("Guardado: 04b_heatmap_features.png")
 
 
-# ── 8. Boxplots de 6 variables clave ───────────────────────────────────────────
-BOXPLOT_FEATS = ["pct_doctorado","pct_renacyt_doc","pct_contratado",
-                 "puntaje_medio","nota_prom_egr","pct_prod_rec"]
+# ── 8. Boxplots de 6 variables clave ─────────────────────────────────────────
+BOXPLOT_FEATS  = ["pct_doctorado","pct_renacyt_doc","pct_contratado",
+                  "puntaje_medio","nota_prom_egr","pct_prod_rec"]
 BOXPLOT_LABELS = ["% doctorado","% RENACYT","% contratado",
                   "Puntaje RENACYT","Nota prom. egresado","% prod. reciente"]
 
@@ -243,4 +241,3 @@ print("Guardado: 04c_boxplots_clave.png")
 
 print(f"\n{'='*50}")
 print("Perfilado completado. Revisa outputs/figures/ y outputs/tables/")
-print("Edita 'cluster_label' en este script según los clústeres que encuentres.")

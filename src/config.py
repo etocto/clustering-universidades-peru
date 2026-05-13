@@ -6,10 +6,10 @@ Parámetros globales del proyecto. Edita GITHUB_USER antes de ejecutar.
 
 from pathlib import Path
 
-# ── GitHub ─────────────────────────────────────────────────────────────────────
+# ── GitHub ────────────────────────────────────────────────────────────────────
 # Reemplaza con tu usuario y nombre de repositorio en GitHub
-GITHUB_USER = "etocto"
-GITHUB_REPO = "clustering-universidades-peru"
+GITHUB_USER   = "etocto"
+GITHUB_REPO   = "clustering-universidades-peru"
 GITHUB_BRANCH = "main"
 
 GITHUB_RAW = (
@@ -21,7 +21,7 @@ DATA_URLS = {
     "escalada": f"{GITHUB_RAW}/matriz_escalada.csv",
 }
 
-# ── Rutas locales ───────────────────────────────────────────────────────────────
+# ── Rutas locales ─────────────────────────────────────────────────────────────
 ROOT       = Path(__file__).resolve().parent.parent
 DATA_DIR   = ROOT / "data"
 FIG_DIR    = ROOT / "outputs" / "figures"
@@ -30,12 +30,12 @@ TABLE_DIR  = ROOT / "outputs" / "tables"
 for d in [DATA_DIR, FIG_DIR, TABLE_DIR]:
     d.mkdir(parents=True, exist_ok=True)
 
-# ── Parámetros de análisis ──────────────────────────────────────────────────────
+# ── Parámetros de análisis ────────────────────────────────────────────────────
 RANDOM_STATE = 42
-K_RANGE      = range(2, 11)      # rango de k a evaluar
-K_FINAL      = 4              # se asigna en 02_k_optimo.py; sobreescribir aquí si ya lo sabes
-PCA_VARIANCE = 0.90              # varianza acumulada a retener en PCA
-FUZZY_THRESHOLD = 80             # umbral mínimo de similitud para el join
+K_RANGE      = range(2, 11)       # rango de k a evaluar
+K_FINAL      = 4                  # se asigna en 02_k_optimo.py; sobreescribir aquí si ya lo sabes
+PCA_VARIANCE = 0.90               # varianza acumulada a retener en PCA
+FUZZY_THRESHOLD = 80              # umbral mínimo de similitud para el join
 
 # Features para clustering (en el mismo orden que matriz_escalada.csv)
 FEATURE_COLS = [
@@ -78,15 +78,32 @@ FEATURE_GROUPS = {
     ],
 }
 
+# ── Nombres de clústeres (fuente única de verdad) ─────────────────────────────
+# Español — usado en tablas CSV y figuras en español
+CLUSTER_NAMES = {
+    1: "Universidades Estabilizadas",
+    2: "Escuelas de Posgrado",
+    3: "Universidades Masivas con Docencia Flexible",
+    4: "Instituciones Regionales en Desarrollo",
+}
+
+# Inglés — usado en figuras y papers en inglés
+CLUSTER_NAMES_EN = {
+    1: "Stabilized Universities",
+    2: "Postgraduate Schools",
+    3: "Mass Universities\nFlexible Teaching",
+    4: "Regional Developing\nInstitutions",
+}
+
 # Colores por clúster (paleta daltónica)
 CLUSTER_COLORS = ["#7F77DD", "#1D9E75", "#D85A30", "#BA7517", "#378ADD"]
 
 # Estilo global para matplotlib
 MPL_STYLE = {
-    "font.family":      "DejaVu Sans",
-    "axes.spines.top":  False,
-    "axes.spines.right":False,
-    "axes.grid":        True,
-    "grid.alpha":       0.3,
-    "figure.dpi":       150,
+    "font.family":        "DejaVu Sans",
+    "axes.spines.top":    False,
+    "axes.spines.right":  False,
+    "axes.grid":          True,
+    "grid.alpha":         0.3,
+    "figure.dpi":         150,
 }

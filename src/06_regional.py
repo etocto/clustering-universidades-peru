@@ -23,7 +23,8 @@ from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from config import DATA_DIR, FIG_DIR, TABLE_DIR, MPL_STYLE, CLUSTER_COLORS, DATA_URLS
+from config import DATA_DIR, FIG_DIR, TABLE_DIR, MPL_STYLE, CLUSTER_COLORS, DATA_URLS, \
+                   CLUSTER_NAMES  # ← nombres centralizados desde config.py
 
 plt.rcParams.update(MPL_STYLE)
 
@@ -63,33 +64,33 @@ def open_csv_smart(path, encoding="latin1", delimiter="|"):
         return _csv.DictReader(open(real_path, encoding=encoding), delimiter=delimiter)
 
 
-# ── 1. Macro-region mapping ─────────────────────────────────────────────────────
+# ── 1. Macro-region mapping ───────────────────────────────────────────────────
 MACROREGION = {
-    "Lima":          "Lima Metropolitana",
-    "Callao":        "Lima Metropolitana",
-    "Arequipa":      "Sur",
-    "Moquegua":      "Sur",
-    "Tacna":         "Sur",
-    "Puno":          "Sur",
-    "Cusco":         "Sur",
-    "Apurímac":      "Sur",
-    "Ayacucho":      "Sur",
-    "Ica":           "Centro",
-    "Junín":         "Centro",
-    "Huancavelica":  "Centro",
-    "Pasco":         "Centro",
-    "Áncash":        "Norte",
-    "La Libertad":   "Norte",
-    "Lambayeque":    "Norte",
-    "Piura":         "Norte",
-    "Tumbes":        "Norte",
-    "Cajamarca":     "Norte",
-    "Amazonas":      "Oriente",
-    "San Martín":    "Oriente",
-    "Loreto":        "Oriente",
-    "Ucayali":       "Oriente",
-    "Madre de Dios": "Oriente",
-    "Huánuco":       "Oriente",
+    "Lima":         "Lima Metropolitana",
+    "Callao":       "Lima Metropolitana",
+    "Arequipa":     "Sur",
+    "Moquegua":     "Sur",
+    "Tacna":        "Sur",
+    "Puno":         "Sur",
+    "Cusco":        "Sur",
+    "Apurímac":     "Sur",
+    "Ayacucho":     "Sur",
+    "Ica":          "Centro",
+    "Junín":        "Centro",
+    "Huancavelica": "Centro",
+    "Pasco":        "Centro",
+    "Áncash":       "Norte",
+    "La Libertad":  "Norte",
+    "Lambayeque":   "Norte",
+    "Piura":        "Norte",
+    "Tumbes":       "Norte",
+    "Cajamarca":    "Norte",
+    "Amazonas":     "Oriente",
+    "San Martín":   "Oriente",
+    "Loreto":       "Oriente",
+    "Ucayali":      "Oriente",
+    "Madre de Dios":"Oriente",
+    "Huánuco":      "Oriente",
 }
 
 NATURAL_REGION = {
@@ -123,9 +124,8 @@ DEPT_COORDS = {
 }
 
 
-# ── 2. Get dominant department per HEI from matriculado ──────────────────────────
+# ── 2. Get dominant department per HEI from matriculado ──────────────────────
 print("Loading pre-computed department data...")
-# Reads the small pre-computed file (137 rows) instead of the full 643MB matriculado
 precomp_path = DATA_DIR / "precomputed_departamentos.csv"
 if not precomp_path.exists():
     raise FileNotFoundError(
@@ -137,24 +137,19 @@ ies_main_dept = dict(zip(df_precomp["universidad"], df_precomp["departamento_pri
 print(f"  {len(ies_main_dept)} HEIs with department data")
 
 
-# ── 3. Merge with cluster assignments ───────────────────────────────────────────
+# ── 3. Merge with cluster assignments ─────────────────────────────────────────
 local_m = DATA_DIR / "matriz_maestra.csv"
 df = pd.read_csv(local_m) if local_m.exists() else pd.read_csv(DATA_URLS["maestra"])
 labels = np.load(DATA_DIR / "labels_final.npy")
 df["cluster"] = labels + 1
 
-CLUSTER_NAMES = {
-    1: "Public stabilized",
-    2: "Specialized schools",
-    3: "Mass private",
-    4: "Unlicensed art schools",
-}
+# Usa CLUSTER_NAMES importado desde config.py (fuente única de verdad)
 df["cluster_name"] = df["cluster"].map(CLUSTER_NAMES)
 
 # Add geographic variables
-df["departamento"]    = df["universidad"].map(ies_main_dept)
-df["macroregion"]     = df["departamento"].map(MACROREGION)
-df["region_natural"]  = df["departamento"].map(NATURAL_REGION)
+df["departamento"]   = df["universidad"].map(ies_main_dept)
+df["macroregion"]    = df["departamento"].map(MACROREGION)
+df["region_natural"] = df["departamento"].map(NATURAL_REGION)
 
 # Fill missing with fuzzy approach
 missing = df["departamento"].isna().sum()
@@ -171,7 +166,7 @@ pivot = pd.crosstab(df["macroregion"], df["cluster_name"])
 print(pivot.to_string())
 
 
-# ── 4. Figure A: stacked bar — clusters per department ─────────────────────────
+# ── 4. Figure A: stacked bar — clusters per department ────────────────────────
 dept_order = (df[df["departamento"] != "Unknown"]
               .groupby("departamento")["universidad"].count()
               .sort_values(ascending=True).index.tolist())
@@ -183,7 +178,7 @@ for cl in range(1, 5):
     counts = [len(df[(df["departamento"]==d) & (df["cluster"]==cl)]) for d in dept_order]
     bars = ax.barh(dept_order, counts, left=bottom,
                    color=CLUSTER_COLORS[cl-1], alpha=0.85,
-                   label=f"Cluster {cl}: {CLUSTER_NAMES[cl]}")
+                   label=f"C{cl}: {CLUSTER_NAMES[cl]}")
     bottom += np.array(counts)
 
 ax.set_xlabel("Number of HEIs")
@@ -195,7 +190,7 @@ plt.close()
 print("Saved: 06a_clusters_por_departamento.png")
 
 
-# ── 5. Figure B: grouped bar — clusters per macro-region ───────────────────────
+# ── 5. Figure B: grouped bar — clusters per macro-region ─────────────────────
 macro_order = ["Lima Metropolitana", "Norte", "Centro", "Sur", "Oriente"]
 macro_order = [m for m in macro_order if m in df["macroregion"].values]
 
@@ -205,7 +200,7 @@ width = 0.2
 
 for i, cl in enumerate(range(1, 5)):
     counts = [len(df[(df["macroregion"]==m) & (df["cluster"]==cl)]) for m in macro_order]
-    ax.bar(x + i*width, counts, width, label=f"Cluster {cl}: {CLUSTER_NAMES[cl]}",
+    ax.bar(x + i*width, counts, width, label=f"C{cl}: {CLUSTER_NAMES[cl]}",
            color=CLUSTER_COLORS[cl-1], alpha=0.85)
 
 ax.set_xticks(x + width * 1.5)
@@ -219,16 +214,14 @@ plt.close()
 print("Saved: 06b_clusters_por_macroregion.png")
 
 
-# ── 6. Figure C: bubble map of Peru ─────────────────────────────────────────────
+# ── 6. Figure C: bubble map of Peru ──────────────────────────────────────────
 fig, ax = plt.subplots(figsize=(8, 11))
 
-# Background: department outlines (approximate polygon borders — simplified)
 ax.set_xlim(-82, -68)
 ax.set_ylim(-19, -0.5)
 ax.set_facecolor("#EAF3DE")
 ax.set_aspect("equal")
 
-# Plot one bubble per department, colored by dominant cluster
 for dept, (lon, lat) in DEPT_COORDS.items():
     sub = df[df["departamento"] == dept]
     if len(sub) == 0:
@@ -245,7 +238,6 @@ for dept, (lon, lat) in DEPT_COORDS.items():
     ax.annotate(f"{dept}\n(n={n_ies})", (lon, lat), fontsize=6,
                 ha="center", va="center", color="white", fontweight="500", zorder=4)
 
-# Legend
 handles = [mpatches.Patch(color=CLUSTER_COLORS[i], alpha=0.85,
            label=f"C{i+1}: {CLUSTER_NAMES[i+1]}") for i in range(4)]
 ax.legend(handles=handles, fontsize=8, loc="lower left", framealpha=0.9)
@@ -259,7 +251,7 @@ plt.close()
 print("Saved: 06c_mapa_burbujas_peru.png")
 
 
-# ── 7. Figure D: heatmap region × cluster ──────────────────────────────────────
+# ── 7. Figure D: heatmap region × cluster ────────────────────────────────────
 import seaborn as sns
 
 heat = pd.crosstab(df["macroregion"], df["cluster"],
@@ -269,7 +261,7 @@ heat.columns = [f"C{c}: {CLUSTER_NAMES[c][:18]}" for c in heat.columns]
 fig, ax = plt.subplots(figsize=(9, 4))
 sns.heatmap(heat, annot=True, fmt=".0f", cmap="YlOrRd",
             linewidths=0.4, linecolor="#E8E6DF", ax=ax,
-            cbar_kws={"shrink": 0.6, "label": "N° HEIs"},
+            cbar_kws={"shrink": 0.6, "label": "Nº HEIs"},
             annot_kws={"size": 10})
 ax.set_title("HEI count by macro-region and cluster", fontsize=12, pad=10)
 ax.set_xlabel("")
@@ -282,13 +274,13 @@ plt.close()
 print("Saved: 06d_heatmap_region_cluster.png")
 
 
-# ── 8. Profile table by macro-region ───────────────────────────────────────────
+# ── 8. Profile table by macro-region ─────────────────────────────────────────
 FEAT_COLS = ["pct_doctorado", "pct_renacyt_doc", "pct_contratado",
              "puntaje_medio", "nota_prom_egr", "pct_prod_rec", "ratio_mat_doc"]
 
 prof = df.groupby("macroregion")[FEAT_COLS].mean().round(2)
-prof["n_ies"]     = df.groupby("macroregion")["universidad"].count()
-prof["pct_pub"]   = df.groupby("macroregion")["es_publico"].mean().round(2) * 100
+prof["n_ies"]   = df.groupby("macroregion")["universidad"].count()
+prof["pct_pub"] = df.groupby("macroregion")["es_publico"].mean().round(2) * 100
 prof.to_csv(TABLE_DIR / "06_perfil_macroregion.csv")
 print("Saved: 06_perfil_macroregion.csv")
 
