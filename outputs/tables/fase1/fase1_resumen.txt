@@ -1,0 +1,254 @@
+IES totales: 99
+IES con n_RENACYT = 0: 15
+
+==============================================================================
+REPLICACION DE LA SOLUCION PUBLICADA
+==============================================================================
+Componentes retenidos: 13  (varianza acumulada 90.82%)
+ASW k=4: 0.227
+Tamanos de cluster (nomenclatura del paper): {'C1': 46, 'C2': 36, 'C3': 3, 'C4': 14}
+ARI contra labels_final.npy del repositorio: 1.000
+
+CHEQUEO DE REPRODUCIBILIDAD — inicializacion Ward (la que describe Methods):
+  tamanos = {np.int32(1): np.int64(13), np.int32(2): np.int64(3), np.int32(3): np.int64(37), np.int32(4): np.int64(46)}, ASW = 0.230
+  ARI Ward-init vs k-means++ = 0.936
+  El codigo publicado usa k-means++ directo; el manuscrito describe
+  inicializacion jerarquica Ward. Hay que alinear texto y codigo.
+
+IES sin RENACYT: concentracion en C4 = 0.93, pureza de C4 = 1.00
+
+==============================================================================
+BLOQUE A — SENSIBILIDAD DE LA DIMENSION DE INVESTIGACION (R2.5a-c)
+==============================================================================
+
+[S0_baseline] 25 indicadores; 7 variables de investigacion en 0 para IES sin RENACYT
+  n = 99  |  variables = 25  |  componentes = 13 (90.8%)
+  ASW = 0.227  |  ARI vs baseline = 1.000
+  tamanos = {np.int32(1): np.int64(46), np.int32(2): np.int64(36), np.int32(3): np.int64(3), np.int32(4): np.int64(14)}
+  IES sin RENACYT: concentracion = 0.93 en C4, pureza = 1.00
+
+[S1_binaria] 18 organizacionales + indicador binario de presencia RENACYT
+  n = 99  |  variables = 19  |  componentes = 11 (90.4%)
+  ASW = 0.238  |  ARI vs baseline = 0.882
+  tamanos = {np.int32(1): np.int64(50), np.int32(2): np.int64(3), np.int32(3): np.int64(9), np.int32(4): np.int64(37)}
+  IES sin RENACYT: concentracion = 0.60 en C3, pureza = 1.00
+
+[S2_binaria_densidad] 18 organizacionales + binaria + densidad relativa de investigadores
+  n = 99  |  variables = 20  |  componentes = 12 (91.6%)
+  ASW = 0.234  |  ARI vs baseline = 0.848
+  tamanos = {np.int32(1): np.int64(38), np.int32(2): np.int64(3), np.int32(3): np.int64(49), np.int32(4): np.int64(9)}
+  IES sin RENACYT: concentracion = 0.60 en C4, pureza = 1.00
+
+[S3_submuestra] 25 indicadores, solo IES con al menos un investigador RENACYT
+  n = 84  |  variables = 25  |  componentes = 13 (90.5%)
+  ASW = 0.130  |  ARI vs baseline = 0.634
+  tamanos = {np.int32(1): np.int64(34), np.int32(2): np.int64(18), np.int32(3): np.int64(30), np.int32(4): np.int64(2)}
+
+[S4_organizacional] solo atributos organizacionales; RENACYT como validacion externa
+  n = 99  |  variables = 18  |  componentes = 11 (91.1%)
+  ASW = 0.171  |  ARI vs baseline = 0.325
+  tamanos = {np.int32(1): np.int64(30), np.int32(2): np.int64(45), np.int32(3): np.int64(21), np.int32(4): np.int64(3)}
+  IES sin RENACYT: concentracion = 0.67 en C2, pureza = 0.22
+
+Guardado: A_especificaciones.csv, A_asignaciones.csv, A_crosswalk_*.csv
+
+==============================================================================
+BLOQUE A bis — RENACYT COMO VALIDACION EXTERNA (nivel analitico, R1.5)
+==============================================================================
+                    n  media_pct_renacyt  media_n_renacyt  pct_sin_renacyt  pct_publico
+S4_organizacional                                                                      
+1                  30              54.33            86.33            10.00        90.00
+2                  45              16.77            58.56            22.22        35.56
+3                  21              25.30            66.19             4.76        14.29
+4                   3              16.37            10.67            33.33        33.33
+
+Presencia de RENACYT x perfil organizacional: chi2 = 4.90, gl = 3, p = 0.179
+Densidad RENACYT entre perfiles (solo IES con investigadores, n=84): H = 6.36, p = 0.09514
+Si ambos p < 0.05, el acoplamiento con RENACYT se predice desde la
+configuracion organizacional sin haberlo usado para construirla: el eje
+es externo y no circular, que es lo que pide R1.5.
+
+==============================================================================
+BLOQUE A ter — ¿ES C4 UN TIPO EMPIRICO O UNA CATEGORIA LEGAL? (R2.1)
+==============================================================================
+es_universidad   0   1
+cluster               
+1                0  46
+2                0  36
+3                3   0
+4               11   3
+
+De las 15 IES sin RENACYT, 12 no son universidades (escuelas de arte, conservatorios, escuelas de posgrado).
+De las 14 IES que no son universidades, 12 no tienen RENACYT.
+Solapamiento (Jaccard) entre 'no universidad' y 'sin RENACYT': 0.71
+Un solapamiento alto implica que C4 no es un tipo emergente de los datos
+sino la categoria legal que la Ley 30220 incorporo bajo el mismo regimen;
+decirlo asi es mas honesto y refuerza el argumento del paper.
+
+==============================================================================
+BLOQUE A quater — ASOCIACION EMPLEO x INVESTIGACION SIN CLUSTERING
+==============================================================================
+
+Spearman rho — todas (n=99)
+  pct_ordinario    pct_renacyt_doc=+0.50*  n_renacyt=+0.35*  n_areas_ocde=+0.43*  puntaje_medio=+0.19 
+  pct_contratado   pct_renacyt_doc=-0.17   n_renacyt=+0.03   n_areas_ocde=-0.05   puntaje_medio=+0.17 
+  pct_exclusiva    pct_renacyt_doc=+0.22*  n_renacyt=+0.37*  n_areas_ocde=+0.36*  puntaje_medio=+0.10 
+  pct_tc           pct_renacyt_doc=+0.39*  n_renacyt=+0.10   n_areas_ocde=+0.23*  puntaje_medio=+0.20*
+
+Spearman rho — solo con RENACYT (n=84)
+  pct_ordinario    pct_renacyt_doc=+0.34*  n_renacyt=+0.09   n_areas_ocde=+0.18   puntaje_medio=-0.16 
+  pct_contratado   pct_renacyt_doc=-0.36*  n_renacyt=-0.09   n_areas_ocde=-0.23*  puntaje_medio=+0.12 
+  pct_exclusiva    pct_renacyt_doc=+0.07   n_renacyt=+0.27*  n_areas_ocde=+0.25*  puntaje_medio=-0.10 
+  pct_tc           pct_renacyt_doc=+0.24*  n_renacyt=-0.22*  n_areas_ocde=-0.05   puntaje_medio=-0.07 
+
+* p < 0.05. Si la asociacion se sostiene en la submuestra con RENACYT,
+el eje laboral y el acoplamiento sistemico son empiricamente distintos y
+estan asociados; si solo aparece en la muestra completa, la asociacion la
+producen los ceros estructurales.
+
+==============================================================================
+BLOQUE B — ¿ES C3 UN TIPO O TRES OUTLIERS? (R2.7)
+==============================================================================
+Instituciones en C3: Escuela de Postgrado Gerens S.A.; Escuela de Posgrado Newman S.A.C.; Escuela Superior de Guerra Naval
+
+Silueta individual de las IES de C3:
+  +0.428  Escuela de Postgrado Gerens S.A.
+  -0.027  Escuela de Posgrado Newman S.A.C.
+  +0.271  Escuela Superior de Guerra Naval
+
+[LOO] sin Escuela de Postgrado Gerens S.A.
+  ARI vs baseline (n=98) = 0.971  |  ASW = 0.221
+  las otras 2 IES de C3 quedan juntas: True (cluster C1, tamano 4)
+
+[LOO] sin Escuela de Posgrado Newman S.A.C.
+  ARI vs baseline (n=98) = 1.000  |  ASW = 0.232
+  las otras 2 IES de C3 quedan juntas: True (cluster C3, tamano 2)
+
+[LOO] sin Escuela Superior de Guerra Naval
+  ARI vs baseline (n=98) = 0.935  |  ASW = 0.225
+  las otras 2 IES de C3 quedan juntas: True (cluster C1, tamano 4)
+
+[sin pct_posgrado y pct_posgrado_egr] variables = 23
+  ARI vs baseline = 0.885  |  ASW = 0.238
+  tamanos = {np.int32(1): np.int64(37), np.int32(2): np.int64(4), np.int32(3): np.int64(13), np.int32(4): np.int64(45)}
+  las 3 IES de posgrado siguen juntas: False (concentracion 0.67, cluster C2, tamano 4)
+
+[estrato a priori] 3 escuelas de posgrado fuera del clustering; k=3 sobre n=96
+  ARI vs baseline = 1.000  |  ASW = 0.216
+  tamanos = {np.int32(1): np.int64(46), np.int32(2): np.int64(14), np.int32(3): np.int64(36)}
+
+Guardado: B_c3_leave_one_out.csv
+
+==============================================================================
+BLOQUE C — SELECCION DE k POR ESPECIFICACION (R2.6)
+==============================================================================
+
+[S0_baseline]
+  k=2: ASW=0.363  gap=1.184  inercia=1751.9
+  k=3: ASW=0.209  gap=1.262  inercia=1481.4
+  k=4: ASW=0.227  gap=1.294  inercia=1326.6
+  k=5: ASW=0.231  gap=1.309  inercia=1212.2
+  k=6: ASW=0.236  gap=1.331  inercia=1137.2
+  k=7: ASW=0.227  gap=1.363  inercia=1051.5
+  k=8: ASW=0.218  gap=1.400  inercia=971.1
+
+[S1_binaria]
+  k=2: ASW=0.192  gap=1.200  inercia=1418.1
+  k=3: ASW=0.206  gap=1.243  inercia=1227.6
+  k=4: ASW=0.238  gap=1.301  inercia=1069.6
+  k=5: ASW=0.222  gap=1.347  inercia=960.1
+  k=6: ASW=0.216  gap=1.371  inercia=861.5
+  k=7: ASW=0.187  gap=1.424  inercia=791.3
+  k=8: ASW=0.229  gap=1.480  inercia=717.8
+
+[S2_binaria_densidad]
+  k=2: ASW=0.186  gap=1.232  inercia=1528.5
+  k=3: ASW=0.208  gap=1.273  inercia=1336.1
+  k=4: ASW=0.234  gap=1.330  inercia=1176.0
+  k=5: ASW=0.241  gap=1.360  inercia=1062.8
+  k=6: ASW=0.195  gap=1.397  inercia=960.3
+  k=7: ASW=0.211  gap=1.418  inercia=880.8
+  k=8: ASW=0.228  gap=1.489  inercia=819.1
+
+[S3_submuestra]
+  k=2: ASW=0.166  gap=1.049  inercia=1595.0
+  k=3: ASW=0.176  gap=1.070  inercia=1427.1
+  k=4: ASW=0.130  gap=1.077  inercia=1305.4
+  k=5: ASW=0.173  gap=1.087  inercia=1223.9
+  k=6: ASW=0.132  gap=1.095  inercia=1131.3
+  k=7: ASW=0.144  gap=1.098  inercia=1041.3
+  k=8: ASW=0.100  gap=1.145  inercia=990.4
+
+[S4_organizacional]
+  k=2: ASW=0.198  gap=1.202  inercia=1343.2
+  k=3: ASW=0.211  gap=1.257  inercia=1152.8
+  k=4: ASW=0.171  gap=1.284  inercia=1033.8
+  k=5: ASW=0.208  gap=1.318  inercia=936.3
+  k=6: ASW=0.234  gap=1.334  inercia=832.5
+  k=7: ASW=0.218  gap=1.392  inercia=762.6
+  k=8: ASW=0.201  gap=1.446  inercia=691.2
+
+Guardado: C_seleccion_k.csv
+
+==============================================================================
+BLOQUE D — ATTRITION ENTRE OLAS Y PANEL BALANCEADO (R2.9)
+==============================================================================
+  2024-II: 113 IES  |  tamanos {np.int32(1): np.int64(66), np.int32(2): np.int64(16), np.int32(3): np.int64(26), np.int32(4): np.int64(5)}
+  2025-I: 99 IES  |  tamanos {np.int32(1): np.int64(60), np.int32(2): np.int64(19), np.int32(3): np.int64(5), np.int32(4): np.int64(15)}
+  2025-II: 75 IES  |  tamanos {np.int32(1): np.int64(43), np.int32(2): np.int64(8), np.int32(3): np.int64(23), np.int32(4): np.int64(1)}
+
+--- Composicion de las IES que salen de cada ola ---
+
+2024-II -> 2025-I: 113 -> 99  | salen 16, entran 2, comunes 97
+Perfil en la ola de origen de las IES que salen:
+sale     False  True 
+cluster              
+1           59      7
+2           15      1
+3           19      7
+4            4      1
+chi2 = 5.13, gl = 3, p = 0.1622  -> la salida NO se concentra en un perfil (aleatoria)
+
+Cruce con la tipologia publicada (C1-C4) de las IES del universo de 99:
+sale         False
+cl_baseline       
+1.0             46
+2.0             35
+3.0              3
+4.0             13
+
+2025-I -> 2025-II: 99 -> 75  | salen 26, entran 2, comunes 73
+Perfil en la ola de origen de las IES que salen:
+sale     False  True 
+cluster              
+1           48     12
+2           11      8
+3            4      1
+4           10      5
+chi2 = 4.17, gl = 3, p = 0.2441  -> la salida NO se concentra en un perfil (aleatoria)
+
+Cruce con la tipologia publicada (C1-C4) de las IES del universo de 99:
+sale         False  True 
+cl_baseline              
+1               36     10
+2               25     11
+3                2      1
+4               10      4
+chi2 = 0.94, gl = 3, p = 0.8146 -> la perdida NO se concentra en ningun perfil publicado
+
+--- Panel balanceado (IES presentes en las tres olas) ---
+IES en las tres olas: 72
+2024-II -> 2025-I  (panel balanceado, n=72): ARI = 0.900, tau = 4.2%
+2025-I -> 2025-II  (panel balanceado, n=72): ARI = 0.510, tau = 27.8%
+2024-II -> 2025-II (ano completo): ARI = 0.579, tau = 25.0%, reclasificadas netas = 18
+
+Guardado: D_attrition.csv, D_panel_balanceado.csv
+
+NOTA DE REPRODUCIBILIDAD: el script 05_longitudinal.py del repositorio
+construye las olas con 9 variables docentes y sin PCA, no con las 25
+variables y PCA como afirma el manuscrito. Hay que corregir la redaccion
+de Methods o rehacer la replicacion longitudinal con el pipeline completo.
+
+==============================================================================
+FIN
+==============================================================================

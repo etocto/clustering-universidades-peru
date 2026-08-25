@@ -1,8 +1,39 @@
-venv/
+# Python
 __pycache__/
 *.pyc
-.env
-.vscode/settings.json
-*.egg-info/
-dist/
+venv/
 .DS_Store
+
+# Archivos temporales de Office
+~$*
+*.tmp
+
+# Borradores LaTeX y logs (se mantienen en local)
+*.log
+*.aux
+*.bbl
+*.blg
+*.out
+*.synctex.gz
+*_working.tex
+main_v6.*
+ms_v6*.tex
+parches_*.tex
+bloque_*.tex
+ajustes_*.tex
+*seccion*.tex
+*_en.tex
+referencias_bibitem*.tex
+sn-article_v5*.tex
+
+# Duplicados
+*" (1)"*
+"README (1).md"
+
+# Material de la revisión anterior (se mantiene en local)
+08_reviewer_responses.py
+observacion_D_censura.py
+outputs/reviewer_responses/
+salida_obsD/
+manuscript supplementary/
+MASTER_CHECKLIST*.md

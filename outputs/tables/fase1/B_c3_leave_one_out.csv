@@ -1,0 +1,6 @@
+prueba,n,ARI_vs_baseline,ASW,restantes_C3_juntas,tamano_cluster_modal
+leave_one_out::Escuela de Postgrado Gerens S.A.,98,0.971,0.221,True,4.0
+leave_one_out::Escuela de Posgrado Newman S.A.C.,98,1.0,0.232,True,2.0
+leave_one_out::Escuela Superior de Guerra Naval,98,0.935,0.225,True,4.0
+sin_variables_posgrado,99,0.885,0.238,False,4.0
+estrato_a_priori_k3,96,1.0,0.216,,

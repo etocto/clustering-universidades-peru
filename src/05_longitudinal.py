@@ -11,6 +11,16 @@ Genera:
   - outputs/figures/05c_casos_transicion.png
   - outputs/tables/05_transiciones.csv
   - outputs/tables/05_ies_cambiaron_cluster.csv
+  - outputs/tables/05_estabilidad_metricas.csv   (ARI y tau por par de olas)
+  - outputs/tables/05_panel_balanceado.csv       (IES presentes en las tres olas)
+
+IMPORTANTE: las etiquetas de cada ola se alinean con el algoritmo hungaro
+antes de contar transiciones. Sin ese paso, tau contabiliza renumeraciones
+arbitrarias del K-means como cambios institucionales.
+
+ALCANCE: la replica longitudinal usa las 9 variables de empleo docente y no
+aplica PCA. Aisla deliberadamente el eje de regimen laboral, que es el unico
+que varia entre olas (RENACYT es una extraccion unica de abril 2026).
 
 NOTA: Para este script necesitas los CSV originales de docente en data/:
   data/docente_2024_II.csv
@@ -26,6 +36,8 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import adjusted_rand_score
+from scipy.optimize import linear_sum_assignment
 from pathlib import Path
 import sys
 
@@ -143,16 +155,101 @@ if len(period_labels) < 2:
 sorted_periods = [p for p in ["2024-II","2025-I","2025-II"] if p in period_labels]
 transition_tables = {}
 
+# ---------------------------------------------------------------------------
+# ALINEACION DE ETIQUETAS ENTRE OLAS (correccion metodologica)
+# ---------------------------------------------------------------------------
+# Cada ola se clusteriza con un K-means ajustado por separado, de modo que la
+# numeracion de los clusteres es arbitraria: el "cluster 1" de 2024-II no tiene
+# por que ser el "cluster 1" de 2025-I. Contar transiciones sin alinear primero
+# las etiquetas cuenta como cambio institucional lo que son renumeraciones del
+# algoritmo, e infla tau. El algoritmo hungaro busca la permutacion de etiquetas
+# que maximiza la diagonal de la matriz de transicion.
+#
+# El ARI, en cambio, es invariante a permutacion, por lo que un ARI alto junto a
+# una tau alta es una contradiccion interna: sirve como chequeo.
+def alinear_etiquetas(serie_origen, serie_destino):
+    """Renumera serie_destino para que sus etiquetas correspondan a las de
+    serie_origen. Devuelve (serie_destino_alineada, diccionario_de_mapeo)."""
+    cm = pd.crosstab(serie_origen, serie_destino)
+    fila, col = linear_sum_assignment(-cm.values)
+    mapeo = {cm.columns[c]: cm.index[r] for r, c in zip(fila, col)}
+    # Las etiquetas de destino sin pareja (si k difiere) se dejan intactas.
+    return serie_destino.map(lambda x: mapeo.get(x, x)), mapeo
+
+
+tau_rows = []
 for i in range(len(sorted_periods) - 1):
     p1, p2 = sorted_periods[i], sorted_periods[i+1]
     c1 = f"cluster_{p1.replace('-','_')}"
     c2 = f"cluster_{p2.replace('-','_')}"
     merged = period_labels[p1].merge(period_labels[p2], on="universidad", how="inner")
-    trans  = pd.crosstab(merged[c1], merged[c2])
+
+    ari = adjusted_rand_score(merged[c1], merged[c2])          # invariante a permutacion
+    n_crudo = (merged[c1] != merged[c2]).sum()                 # SIN alinear (incorrecto)
+    merged[c2], mapeo = alinear_etiquetas(merged[c1], merged[c2])
+
+    trans = pd.crosstab(merged[c1], merged[c2])
     transition_tables[f"{p1}→{p2}"] = trans
+
     n_cambio = (merged[c1] != merged[c2]).sum()
-    print(f"\nTransición {p1}→{p2}: {n_cambio}/{len(merged)} IES cambiaron de clúster")
+    tau = 100 * n_cambio / len(merged)
+    tau_crudo = 100 * n_crudo / len(merged)
+
+    print(f"\nTransición {p1}→{p2}  (n compartidas = {len(merged)})")
+    print(f"  mapeo de etiquetas {p2}→{p1}: {mapeo}")
+    print(f"  ARI = {ari:.3f}")
+    print(f"  tau (etiquetas alineadas)   = {n_cambio}/{len(merged)} = {tau:.1f}%   <- valor correcto")
+    print(f"  tau (sin alinear, obsoleto) = {n_crudo}/{len(merged)} = {tau_crudo:.1f}%")
     print(trans.to_string())
+
+    tau_rows.append({"transicion": f"{p1}->{p2}", "n_compartidas": len(merged),
+                     "ARI": round(ari, 3), "n_cambian": int(n_cambio),
+                     "tau_pct": round(tau, 1),
+                     "tau_sin_alinear_pct": round(tau_crudo, 1)})
+
+# Panel balanceado: solo las IES presentes en las tres olas. Evita que los
+# cambios de tau reflejen cambios de composicion de la muestra (observacion 9
+# del Revisor 2) en lugar de transformacion institucional.
+if len(sorted_periods) >= 3:
+    comunes = set.intersection(*[set(period_labels[p]["universidad"])
+                                 for p in sorted_periods])
+    panel = pd.DataFrame({"universidad": sorted(comunes)})
+    for p in sorted_periods:
+        c = f"cluster_{p.replace('-','_')}"
+        panel = panel.merge(period_labels[p], on="universidad", how="left")
+    for a, b in zip(sorted_periods, sorted_periods[1:]):
+        ca = f"cluster_{a.replace('-','_')}"
+        cb = f"cluster_{b.replace('-','_')}"
+        panel[cb], _ = alinear_etiquetas(panel[ca], panel[cb])
+
+    print(f"\n--- Panel balanceado: {len(panel)} IES presentes en las tres olas ---")
+    for a, b in zip(sorted_periods, sorted_periods[1:]):
+        ca = f"cluster_{a.replace('-','_')}"
+        cb = f"cluster_{b.replace('-','_')}"
+        ari_p = adjusted_rand_score(panel[ca], panel[cb])
+        tau_p = 100 * (panel[ca] != panel[cb]).mean()
+        print(f"  {a} -> {b}: ARI = {ari_p:.3f}, tau = {tau_p:.1f}%")
+        tau_rows.append({"transicion": f"{a}->{b} (panel balanceado)",
+                         "n_compartidas": len(panel), "ARI": round(ari_p, 3),
+                         "n_cambian": int((panel[ca] != panel[cb]).sum()),
+                         "tau_pct": round(tau_p, 1), "tau_sin_alinear_pct": None})
+
+    cini = f"cluster_{sorted_periods[0].replace('-','_')}"
+    cfin = f"cluster_{sorted_periods[-1].replace('-','_')}"
+    ari_t = adjusted_rand_score(panel[cini], panel[cfin])
+    neto = int((panel[cini] != panel[cfin]).sum())
+    print(f"  {sorted_periods[0]} -> {sorted_periods[-1]} (año completo): "
+          f"ARI = {ari_t:.3f}, tau = {100*neto/len(panel):.1f}%, "
+          f"reclasificadas netas = {neto}")
+    tau_rows.append({"transicion": f"{sorted_periods[0]}->{sorted_periods[-1]} (año completo)",
+                     "n_compartidas": len(panel), "ARI": round(ari_t, 3),
+                     "n_cambian": neto, "tau_pct": round(100*neto/len(panel), 1),
+                     "tau_sin_alinear_pct": None})
+    panel.to_csv(TABLE_DIR / "05_panel_balanceado.csv", index=False)
+    print("Guardado: 05_panel_balanceado.csv")
+
+pd.DataFrame(tau_rows).to_csv(TABLE_DIR / "05_estabilidad_metricas.csv", index=False)
+print("Guardado: 05_estabilidad_metricas.csv")
 
 
 # ── 5. Figura: evolución de tamaño de clústeres ────────────────────────────────
@@ -187,6 +284,9 @@ if len(sorted_periods) >= 2:
     c1 = f"cluster_{p1.replace('-','_')}"
     c2 = f"cluster_{p2.replace('-','_')}"
     merged_all = period_labels[p1].merge(period_labels[p2], on="universidad", how="inner")
+    # Alinear tambien aqui: sin esto la lista de "cambios" incluye IES que solo
+    # cambiaron de numero de etiqueta, no de perfil.
+    merged_all[c2], _ = alinear_etiquetas(merged_all[c1], merged_all[c2])
     cambios    = merged_all[merged_all[c1] != merged_all[c2]].copy()
     cambios    = cambios.rename(columns={c1: f"cluster_{p1}", c2: f"cluster_{p2}"})
     cambios["transicion"] = cambios.apply(

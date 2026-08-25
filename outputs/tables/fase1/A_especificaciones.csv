@@ -1,0 +1,6 @@
+especificacion,descripcion,n_IES,n_variables,n_componentes,varianza_%,ASW_k4,ARI_vs_baseline,tamanos,conc_sin_renacyt,pureza_cluster_sin_renacyt
+S0_baseline,25 indicadores; 7 variables de investigacion en 0 para IES sin RENACYT,99,25,13,90.82,0.227,1.0,"{np.int32(1): np.int64(46), np.int32(2): np.int64(36), np.int32(3): np.int64(3), np.int32(4): np.int64(14)}",0.933,1.0
+S1_binaria,18 organizacionales + indicador binario de presencia RENACYT,99,19,11,90.38,0.238,0.882,"{np.int32(1): np.int64(50), np.int32(2): np.int64(3), np.int32(3): np.int64(9), np.int32(4): np.int64(37)}",0.6,1.0
+S2_binaria_densidad,18 organizacionales + binaria + densidad relativa de investigadores,99,20,12,91.59,0.234,0.848,"{np.int32(1): np.int64(38), np.int32(2): np.int64(3), np.int32(3): np.int64(49), np.int32(4): np.int64(9)}",0.6,1.0
+S3_submuestra,"25 indicadores, solo IES con al menos un investigador RENACYT",84,25,13,90.47,0.13,0.634,"{np.int32(1): np.int64(34), np.int32(2): np.int64(18), np.int32(3): np.int64(30), np.int32(4): np.int64(2)}",,
+S4_organizacional,solo atributos organizacionales; RENACYT como validacion externa,99,18,11,91.07,0.171,0.325,"{np.int32(1): np.int64(30), np.int32(2): np.int64(45), np.int32(3): np.int64(21), np.int32(4): np.int64(3)}",0.667,0.222

@@ -1,0 +1,6 @@
+transicion,n_compartidas,ARI,n_cambian,tau_pct,tau_sin_alinear_pct
+2024-II->2025-I,97,0.893,4,4.1,39.2
+2025-I->2025-II,73,0.513,20,27.4,42.5
+2024-II->2025-I (panel balanceado),72,0.9,3,4.2,
+2025-I->2025-II (panel balanceado),72,0.51,20,27.8,
+2024-II->2025-II (año completo),72,0.579,18,25.0,

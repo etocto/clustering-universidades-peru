@@ -1,0 +1,4 @@
+,private,public,chi2,df,p,cramers_V,ownership_classifier_accuracy
+P1,0,9,57.76,2,2.86e-13,0.776,79.2
+P2,44,5,57.76,2,2.86e-13,0.776,79.2
+P3,6,32,57.76,2,2.86e-13,0.776,79.2
