@@ -37,3 +37,14 @@ outputs/reviewer_responses/
 salida_obsD/
 manuscript supplementary/
 MASTER_CHECKLIST*.md
+
+# Borradores con nombre largo (no terminan en .tex)
+*seccion*
+*condensado*
+*ajustes_finales*
+*referencias_bibitem*
+*marco_teorico*
+*introduccion_final*
+*metodos_seccion*
+src/08*
+src/09_reviewer*
